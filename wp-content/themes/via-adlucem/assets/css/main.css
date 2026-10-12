@@ -75,20 +75,23 @@ a:hover, a:focus { color: var(--va-primary); }
 
 img { max-width: 100%; height: auto; }
 
+/* Defaults stay at low specificity (:where) so typography set per widget in Elementor always wins.
+   Elementor headings get no margin: spacing comes from the container gap. */
 h1, h2, h3, h4, h5, h6,
-.elementor-widget-heading .elementor-heading-title {
+:where(.elementor-widget-heading) .elementor-heading-title {
 	font-family: var(--va-font);
 	font-weight: 400;
 	color: inherit;
 	letter-spacing: var(--va-tracking);
 	margin: 0 0 .6em;
 }
-h1, .elementor-widget-heading h1.elementor-heading-title { font-size: clamp(44px, 6vw, 84px); line-height: 1; }
-h2, .elementor-widget-heading h2.elementor-heading-title { font-size: clamp(32px, 3.6vw, 52px); line-height: 1.08; }
-h3, .elementor-widget-heading h3.elementor-heading-title { font-size: clamp(24px, 2.2vw, 30px); line-height: 1.15; }
-h4, .elementor-widget-heading h4.elementor-heading-title { font-size: 23px; line-height: 1.3; }
-h5, .elementor-widget-heading h5.elementor-heading-title { font-size: 18px; line-height: 1.5; }
-h6, .elementor-widget-heading h6.elementor-heading-title { font-size: 14px; line-height: 1.5; letter-spacing: .08em; text-transform: uppercase; }
+:where(.elementor-widget-heading) .elementor-heading-title { margin: 0; }
+h1, :where(.elementor-widget-heading) h1.elementor-heading-title { font-size: clamp(44px, 6vw, 84px); line-height: 1; }
+h2, :where(.elementor-widget-heading) h2.elementor-heading-title { font-size: clamp(32px, 3.6vw, 52px); line-height: 1.08; }
+h3, :where(.elementor-widget-heading) h3.elementor-heading-title { font-size: clamp(24px, 2.2vw, 30px); line-height: 1.15; }
+h4, :where(.elementor-widget-heading) h4.elementor-heading-title { font-size: 23px; line-height: 1.3; }
+h5, :where(.elementor-widget-heading) h5.elementor-heading-title { font-size: 18px; line-height: 1.5; }
+h6, :where(.elementor-widget-heading) h6.elementor-heading-title { font-size: 14px; line-height: 1.5; letter-spacing: .08em; text-transform: uppercase; }
 
 p { margin: 0 0 1.2em; }
 .elementor-widget-text-editor { color: var(--va-grey-500); }
@@ -495,7 +498,7 @@ body.admin-bar .va-header { top: 32px; }
 .va-counters .elementor-counter-title {
 	justify-content: flex-start !important; text-align: left !important;
 	font-family: var(--va-font) !important; font-size: 13px !important; font-weight: 500 !important;
-	letter-spacing: .14em; text-transform: uppercase; color: var(--va-grey-400) !important;
+	line-height: 1.4 !important; letter-spacing: .14em; text-transform: uppercase; color: var(--va-grey-400) !important;
 }
 
 /* ---------- Images ---------- */

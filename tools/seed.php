@@ -71,6 +71,9 @@ function va_seed( $root, $opts = array() ) {
 	}
 	PLL()->model->clean_languages_cache();
 	flush_rewrite_rules( false );
+	// The persistent object cache keeps Polylang's language list (home URLs) from before the changes.
+	wp_cache_flush();
+	$log[] = 'Then run flush_rewrite_rules() in a new request: rules built in this one still use the old default language.';
 
 	return $log;
 }
@@ -82,6 +85,8 @@ function va_seed( $root, $opts = array() ) {
 function va_seed_languages() {
 	$options                 = get_option( 'polylang' );
 	$options['default_lang'] = 'en';
+	// Translated front pages live at /az/ and /uz/ instead of /az/<page-slug>/.
+	$options['redirect_lang'] = 1;
 	update_option( 'polylang', $options );
 
 	// Order in the switcher: EN, AZ, UZ.
