@@ -48,6 +48,10 @@ function va_logo( $variant = 'dark' ) {
  * Social links that have a URL set in the Customizer.
  */
 function va_social_links() {
+	echo va_get_social_links(); // phpcs:ignore WordPress.Security.EscapeOutput -- escaped inside.
+}
+
+function va_get_social_links() {
 	$items = '';
 	foreach ( va_social_networks() as $key => $label ) {
 		$url = get_theme_mod( 'va_social_' . $key );
@@ -55,7 +59,51 @@ function va_social_links() {
 			$items .= sprintf( '<li><a href="%s" target="_blank" rel="noopener">%s</a></li>', esc_url( $url ), esc_html( $label ) );
 		}
 	}
-	if ( $items ) {
-		echo '<ul class="va-social">' . $items . '</ul>'; // phpcs:ignore WordPress.Security.EscapeOutput -- escaped above.
-	}
+	return $items ? '<ul class="va-social">' . $items . '</ul>' : '';
 }
+
+/**
+ * Contact details shared by the footer and the Contact page ([va_contact_details]),
+ * so both always show the same address, phone, email and social links.
+ *
+ * @return array[] List of array( 'title' => string, 'html' => escaped HTML ).
+ */
+function va_contact_groups() {
+	$phone  = va_t( 'phone' );
+	$email  = va_t( 'email' );
+	$groups = array(
+		array(
+			'title' => va_t( 'footer_visit' ),
+			'html'  => '<p>' . esc_html( va_t( 'address' ) ) . '</p>',
+		),
+		array(
+			'title' => va_t( 'footer_talk' ),
+			'html'  => sprintf(
+				'<p><a href="tel:%1$s">%2$s</a><br><a href="mailto:%3$s">%4$s</a></p>',
+				esc_attr( preg_replace( '/[^0-9+]/', '', $phone ) ),
+				esc_html( $phone ),
+				esc_attr( $email ),
+				esc_html( $email )
+			),
+		),
+	);
+	$social = va_get_social_links();
+	if ( $social ) {
+		$groups[] = array(
+			'title' => va_t( 'footer_social' ),
+			'html'  => $social,
+		);
+	}
+	return $groups;
+}
+
+add_shortcode(
+	'va_contact_details',
+	function () {
+		$out = '<div class="va-contact-details">';
+		foreach ( va_contact_groups() as $group ) {
+			$out .= '<div class="va-contact-detail"><h3 class="va-contact-detail__label">' . esc_html( $group['title'] ) . '</h3><div class="va-contact-detail__body">' . $group['html'] . '</div></div>';
+		}
+		return $out . '</div>';
+	}
+);

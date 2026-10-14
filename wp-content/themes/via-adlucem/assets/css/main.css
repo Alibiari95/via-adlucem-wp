@@ -587,7 +587,18 @@ body.admin-bar .va-header { top: 32px; }
 
 .va-footer__bottom { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 20px; padding-top: 28px; padding-bottom: 28px; border-top: 1px solid rgba(255,255,255,.12); font-size: 13px; letter-spacing: .04em; }
 .va-footer__bottom p { margin: 0; }
-.va-social { display: flex; flex-wrap: wrap; gap: 26px; list-style: none; margin: 0; padding: 0; text-transform: uppercase; letter-spacing: .12em; }
+.va-social { display: flex; flex-direction: column; gap: 4px; list-style: none; margin: 0; padding: 0; }
+
+/* Contact details on the Contact page ([va_contact_details]) */
+.va-contact-details { display: flex; flex-direction: column; }
+.va-contact-detail { padding: 26px 0 30px; border-top: 1px solid var(--va-line); }
+.va-contact-detail__label {
+	display: flex; align-items: center; gap: 12px; margin: 0 0 12px;
+	font-size: 13px; font-weight: 500; line-height: 1.4; letter-spacing: .14em; text-transform: uppercase; color: var(--va-grey-400);
+}
+.va-contact-detail__label::before { content: ""; width: 9px; height: 9px; border-radius: 50%; background: var(--va-accent); flex: none; }
+.va-contact-detail__body, .va-contact-detail__body p { margin: 0; font-size: 19px; line-height: 1.5; color: var(--va-ink); }
+.va-contact-detail__body a:hover { color: var(--va-primary); }
 .va-footer__top { text-transform: uppercase; letter-spacing: .12em; }
 
 /* ---------- Theme banners (services archive + single) ---------- */

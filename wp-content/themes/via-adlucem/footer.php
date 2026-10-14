@@ -24,39 +24,16 @@ defined( 'ABSPATH' ) || exit;
 			<p><?php echo esc_html( va_t( 'footer_about' ) ); ?></p>
 		</div>
 
-		<div class="va-footer__col">
-			<h2 class="va-footer__title"><?php echo esc_html( va_t( 'footer_visit' ) ); ?></h2>
-			<p><?php echo esc_html( va_t( 'address' ) ); ?></p>
-		</div>
-
-		<div class="va-footer__col">
-			<h2 class="va-footer__title"><?php echo esc_html( va_t( 'footer_talk' ) ); ?></h2>
-			<p>
-				<a href="tel:<?php echo esc_attr( preg_replace( '/[^0-9+]/', '', va_t( 'phone' ) ) ); ?>"><?php echo esc_html( va_t( 'phone' ) ); ?></a><br>
-				<a href="mailto:<?php echo esc_attr( va_t( 'email' ) ); ?>"><?php echo esc_html( va_t( 'email' ) ); ?></a>
-			</p>
-		</div>
-
-		<?php if ( has_nav_menu( 'va-footer' ) ) : ?>
+		<?php foreach ( va_contact_groups() as $group ) : ?>
 			<div class="va-footer__col">
-				<h2 class="va-footer__title"><?php echo esc_html( va_t( 'footer_nav' ) ); ?></h2>
-				<?php
-				wp_nav_menu(
-					array(
-						'theme_location' => 'va-footer',
-						'container'      => false,
-						'menu_class'     => 'va-footer__menu',
-						'depth'          => 1,
-					)
-				);
-				?>
+				<h2 class="va-footer__title"><?php echo esc_html( $group['title'] ); ?></h2>
+				<?php echo $group['html']; // phpcs:ignore WordPress.Security.EscapeOutput -- escaped in va_contact_groups(). ?>
 			</div>
-		<?php endif; ?>
+		<?php endforeach; ?>
 	</div>
 
 	<div class="va-container va-footer__bottom">
 		<p><?php echo esc_html( str_replace( '%s', gmdate( 'Y' ), va_t( 'copyright' ) ) ); ?></p>
-		<?php va_social_links(); ?>
 		<a class="va-footer__top" href="#va-header"><?php echo esc_html( va_t( 'back_to_top' ) ); ?> &uarr;</a>
 	</div>
 </footer>

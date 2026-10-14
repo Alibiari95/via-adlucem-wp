@@ -21,7 +21,7 @@ function va_strings() {
 		'footer_about'    => 'A results-driven engineering and design firm with more than 10 years of BIM experience in Azerbaijan.',
 		'footer_visit'  => 'Visit us',
 		'footer_talk'   => 'Talk to us',
-		'footer_nav'    => 'Navigate',
+		'footer_social' => 'Social media',
 		'address'       => '16e Keykab Khanim Safaraliyeva St, Time Tower, 3rd floor, Baku 1010',
 		'phone'         => '+994 55 533 41 47',
 		'email'         => 'info@via-adlucem.com',
