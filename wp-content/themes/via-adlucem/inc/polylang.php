@@ -51,6 +51,14 @@ add_filter(
 	20
 );
 
+// Hello Elementor prints the excerpt as a second meta description; skip it when an SEO description is set.
+add_filter(
+	'hello_elementor_description_meta_tag',
+	function ( $enabled ) {
+		return is_singular() && get_post_meta( get_queried_object_id(), 'hostinger_ai_assistant_seo_description', true ) ? false : $enabled;
+	}
+);
+
 add_filter(
 	'get_post_metadata',
 	function ( $value, $object_id, $meta_key ) {
