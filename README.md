@@ -7,10 +7,14 @@ Code for [via-adlucem.com](https://via-adlucem.com): an Archicon-inspired archit
 | Path | What it is |
 |---|---|
 | `wp-content/themes/via-adlucem/` | Child theme of **Hello Elementor**: header, footer, styles, scripts, custom Elementor widgets |
+| `wp-content/mu-plugins/va-services.php` | **Services** custom post type (`/services/`), translatable with Polylang, built with Elementor |
 | `wp-content/mu-plugins/va-deploy.php` | Deploys this repository onto the server (`va_deploy( $ref )` / `wp va deploy --ref=main`) |
 | `content/i18n/{en,az,uz}.php` | Sample content per language used by the seed script |
+| `content/services/{en,az,uz}.php` | Services content (from `services-pages-copy.docx`) and translations |
+| `content/media/` | Real photos used by the services pages |
 | `content/placeholders/` | Placeholder images in the brand palette (replace in the Media Library) |
 | `tools/seed.php` | One-time setup: languages, Elementor kit, forms, pages, menus, Polylang strings |
+| `tools/seed-services.php` | One-time setup of the 4 services × 3 languages, their SEO meta and menu entries |
 
 ## Theme
 
@@ -20,6 +24,7 @@ Code for [via-adlucem.com](https://via-adlucem.com): an Archicon-inspired archit
   - containers: `va-section`, `va-section--tight`, `va-section--surface`, `va-section--dark`, `va-page-banner`, `va-services`, `va-counters`
   - widgets: `va-label` (small caps label with orange dot), `va-statement`, `va-statement--xl`, `va-lead`, `va-btn-outline`, `va-image-tall`, `va-reveal` (fade-up on scroll)
 - Header/footer texts are Polylang strings: **Languages → Translations → group "Via Adlucem"**.
+- Services: **Services** in the admin menu. Header image = *Header image* (featured image), subtitle = *Excerpt*, body = Elementor. Order = *Page Attributes → Order*. The overview at `/services/` and the "Other services" cards are generated automatically.
 - Social links: **Appearance → Customize → Via Adlucem — social links**.
 
 ## Deploying

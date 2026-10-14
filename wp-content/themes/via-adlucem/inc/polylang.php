@@ -26,8 +26,23 @@ function va_strings() {
 		'email'         => 'info@via-adlucem.com',
 		'copyright'     => '© %s Via Adlucem. All rights reserved.',
 		'back_to_top'   => 'Back to top',
+		// Services archive / single.
+		'services'       => 'Services',
+		'services_intro' => 'Design and engineering services for developers, SMEs and project owners across Azerbaijan and Central Asia.',
+		'other_services' => 'Other services',
+		'learn_more'     => 'Learn more',
 	);
 }
+
+// Archive heading and <title> for /services/ in the current language.
+add_filter(
+	'post_type_archive_title',
+	function ( $title, $post_type ) {
+		return 'va_service' === $post_type ? va_t( 'services' ) : $title;
+	},
+	10,
+	2
+);
 
 add_action(
 	'init',

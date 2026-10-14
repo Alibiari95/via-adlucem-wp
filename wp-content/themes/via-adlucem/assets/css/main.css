@@ -245,14 +245,21 @@ body.admin-bar .va-header { top: 32px; }
 /* Sub menus */
 .va-menu .sub-menu {
 	position: absolute; top: 100%; left: -24px;
-	min-width: 220px; margin: 0; padding: 18px 24px;
+	min-width: 340px; margin: 0; padding: 18px 28px;
 	list-style: none; background: #fff; color: var(--va-ink);
 	box-shadow: 0 20px 40px rgba(18,17,16,.08);
 	opacity: 0; visibility: hidden; transform: translateY(8px);
 	transition: opacity .3s var(--va-ease), transform .3s var(--va-ease), visibility .3s;
 }
 .va-menu li:hover > .sub-menu, .va-menu li:focus-within > .sub-menu { opacity: 1; visibility: visible; transform: none; }
-.va-menu .sub-menu a { display: block; padding: 6px 0; font-size: 15px; }
+.va-menu .sub-menu a { display: block; padding: 8px 0; font-size: 15px; line-height: 1.35; color: var(--va-ink); }
+.va-menu .sub-menu a:hover, .va-menu .sub-menu .current-menu-item > a { color: var(--va-primary); }
+.va-menu .sub-menu li + li { border-top: 1px solid var(--va-grey-100); }
+/* Small caret after menu items with a dropdown */
+.va-menu > .menu-item-has-children > a::after {
+	content: ""; display: inline-block; width: 6px; height: 6px; margin: 0 0 3px 9px;
+	border-right: 1.5px solid currentColor; border-bottom: 1.5px solid currentColor; transform: rotate(45deg);
+}
 
 /* Polylang language switcher items: EN / AZ / UZ */
 .va-menu > .lang-item + .lang-item { margin-left: -30px; }
@@ -300,7 +307,8 @@ body.admin-bar .va-header { top: 32px; }
 .va-mobile__inner { display: flex; flex-direction: column; justify-content: space-between; min-height: 100%; gap: 40px; }
 .va-mobile__menu { list-style: none; margin: 0; padding: 0; }
 .va-mobile__menu > li:not(.lang-item) > a { display: block; padding: 8px 0; font-size: clamp(36px, 9vw, 56px); line-height: 1.1; letter-spacing: var(--va-tracking); }
-.va-mobile__menu .sub-menu { list-style: none; padding: 0 0 10px 4px; }
+.va-mobile__menu .sub-menu { list-style: none; margin: 0; padding: 4px 0 14px 4px; }
+.va-mobile__menu .sub-menu a { display: block; padding: 5px 0; font-size: 17px; line-height: 1.35; color: rgba(255,255,255,.72); }
 .va-mobile__menu .lang-item { display: inline-block; margin: 30px 18px 0 0; }
 .va-mobile__menu .lang-item > a { font-size: 15px; letter-spacing: .1em; opacity: .6; }
 .va-mobile__menu .lang-item.current-lang > a { opacity: 1; border-bottom: 2px solid var(--va-accent); }
@@ -576,6 +584,68 @@ body.admin-bar .va-header { top: 32px; }
 .va-footer__bottom p { margin: 0; }
 .va-social { display: flex; flex-wrap: wrap; gap: 26px; list-style: none; margin: 0; padding: 0; text-transform: uppercase; letter-spacing: .12em; }
 .va-footer__top { text-transform: uppercase; letter-spacing: .12em; }
+
+/* ---------- Theme banners (services archive + single) ---------- */
+.va-banner {
+	position: relative; overflow: hidden;
+	padding: calc(var(--va-header-h) + clamp(80px, 11vw, 160px)) 0 clamp(70px, 8vw, 110px);
+	background: var(--va-navy-900); color: #fff;
+}
+.va-banner::after {
+	content: ""; position: absolute; top: 0; bottom: 0; right: -10%; width: 45%;
+	background: linear-gradient(115deg, transparent 0 30%, rgba(0,84,221,.28) 30% 52%, transparent 52% 58%, rgba(0,84,221,.16) 58%);
+	pointer-events: none;
+}
+.va-banner--image { min-height: min(78vh, 760px); display: flex; align-items: flex-end; box-sizing: border-box; background: var(--va-ink) var(--va-banner-image) center / cover no-repeat; }
+.va-banner--image::after { right: 0; width: auto; left: 0; background: linear-gradient(180deg, rgba(0,27,84,.55) 0%, rgba(18,17,16,.25) 40%, rgba(18,17,16,.7) 100%); }
+.va-banner .va-container { position: relative; z-index: 1; }
+.va-banner__label { display: inline-flex; align-items: center; gap: 12px; margin: 0 0 24px; font-size: 13px; font-weight: 500; letter-spacing: .14em; text-transform: uppercase; color: rgba(255,255,255,.75); }
+.va-banner__label::before { content: ""; width: 9px; height: 9px; border-radius: 50%; background: var(--va-accent); }
+.va-banner__label a:hover { color: var(--va-accent); }
+.va-banner__title { max-width: 18ch; margin: 0; color: #fff; font-size: clamp(40px, 5.6vw, 84px); line-height: 1.02; letter-spacing: -.035em; }
+.va-banner__text { max-width: 46ch; margin: 28px 0 0; font-size: clamp(18px, 1.6vw, 22px); line-height: 1.5; color: rgba(255,255,255,.82); }
+
+/* Theme content blocks */
+.va-block { padding: var(--va-section) 0; }
+.va-block--surface { background: var(--va-surface); }
+.va-block__head { display: flex; align-items: baseline; justify-content: space-between; gap: 30px; margin-bottom: 50px; }
+.va-block__label { margin: 0; font-size: clamp(28px, 3vw, 44px); line-height: 1.1; }
+.va-link { font-size: 14px; font-weight: 500; letter-spacing: .1em; text-transform: uppercase; white-space: nowrap; }
+
+/* Service cards */
+.va-service-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 70px 40px; }
+.va-service-grid--3 { grid-template-columns: repeat(3, 1fr); gap: 40px 30px; }
+@media (max-width: 1024px) { .va-service-grid--3 { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 680px) { .va-service-grid, .va-service-grid--3 { grid-template-columns: 1fr; gap: 50px; } }
+
+.va-service-card { display: flex; flex-direction: column; color: var(--va-ink); }
+.va-service-card:hover, .va-service-card:focus { color: var(--va-ink); }
+.va-service-card__media { display: block; overflow: hidden; aspect-ratio: 16 / 10; background: var(--va-grey-100); }
+.va-service-card__media img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 1s var(--va-ease); }
+.va-service-card:hover .va-service-card__media img { transform: scale(1.05); }
+.va-service-card__body { display: flex; flex-direction: column; gap: 12px; padding-top: 26px; }
+.va-service-card__num { font-size: 13px; letter-spacing: .1em; color: var(--va-grey-300); }
+.va-service-card__title { font-size: clamp(22px, 2vw, 30px); line-height: 1.18; letter-spacing: var(--va-tracking); transition: color .3s var(--va-ease); }
+.va-service-card:hover .va-service-card__title { color: var(--va-primary); }
+.va-service-card__text { color: var(--va-grey-500); }
+.va-service-card__more { margin-top: 6px; font-size: 13px; font-weight: 500; letter-spacing: .12em; text-transform: uppercase; }
+.va-service-card__more span { display: inline-block; color: var(--va-orange-600); transition: transform .3s var(--va-ease); }
+.va-service-card:hover .va-service-card__more span { transform: translateX(6px); }
+.va-service-grid--3 .va-service-card__title { font-size: 22px; }
+.va-service-grid--3 .va-service-card__text { display: none; }
+
+/* Feature list (Elementor container with class "va-features"; each item a container with heading + text) */
+.va-features { counter-reset: va-feature; }
+.va-features > .e-con, .va-features > .e-con-inner > .e-con { counter-increment: va-feature; position: relative; border-top: 1px solid var(--va-line); --padding-top: 64px !important; }
+.va-features > .e-con::before, .va-features > .e-con-inner > .e-con::before {
+	content: counter(va-feature, decimal-leading-zero);
+	position: absolute; top: 26px; left: 0;
+	font-size: 13px; letter-spacing: .1em; color: var(--va-orange-600);
+}
+.va-features .elementor-widget-heading .elementor-heading-title { font-size: clamp(20px, 1.7vw, 24px); line-height: 1.25; }
+.va-features .elementor-widget-text-editor { font-size: 16px; }
+
+.va-lead--xl, .va-lead--xl .elementor-widget-container { font-size: clamp(20px, 1.9vw, 27px); line-height: 1.45; letter-spacing: -.01em; color: var(--va-ink); }
 
 /* ---------- Reveal on scroll (class "va-reveal" on Elementor widgets) ---------- */
 .va-js .va-reveal { opacity: 0; transform: translateY(36px); transition: opacity 1s var(--va-ease), transform 1s var(--va-ease); }

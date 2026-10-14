@@ -48,6 +48,9 @@ function va_asset_version( $relative ) {
  * Set per page with the `_va_transparent_header` meta (the seed script does this).
  */
 function va_has_transparent_header() {
+	if ( is_singular( 'va_service' ) || is_post_type_archive( 'va_service' ) ) {
+		return true; // These templates always start with a dark banner.
+	}
 	return is_singular() && (bool) get_post_meta( get_queried_object_id(), '_va_transparent_header', true );
 }
 

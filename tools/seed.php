@@ -156,14 +156,22 @@ function va_seed_elementor_kit() {
  * Media
  * ---------------------------------------------------------------------- */
 
-function va_seed_media( $dir ) {
+/**
+ * Sideload images from a repo folder into the Media Library (once per file).
+ *
+ * @param string $dir  Folder with the images.
+ * @param string $ext  File extension to import.
+ * @param array  $alts Alt text by file name (without extension). Files with alt text are real photos.
+ */
+function va_seed_media( $dir, $ext = 'jpg', $alts = array() ) {
 	require_once ABSPATH . 'wp-admin/includes/file.php';
 	require_once ABSPATH . 'wp-admin/includes/media.php';
 	require_once ABSPATH . 'wp-admin/includes/image.php';
 
 	$ids = array();
-	foreach ( glob( $dir . '/*.jpg' ) as $file ) {
-		$key      = basename( $file, '.jpg' );
+	foreach ( glob( $dir . '/*.' . $ext ) as $file ) {
+		$key      = basename( $file, '.' . $ext );
+		$alt      = $alts[ $key ] ?? '';
 		$existing = get_posts(
 			array(
 				'post_type'   => 'attachment',
@@ -179,18 +187,18 @@ function va_seed_media( $dir ) {
 			$ids[ $key ] = (int) $existing[0];
 			continue;
 		}
-		$tmp = wp_tempnam( $key . '.jpg' );
+		$tmp = wp_tempnam( $key . '.' . $ext );
 		copy( $file, $tmp );
 		$id = media_handle_sideload(
-			array( 'name' => 'va-placeholder-' . $key . '.jpg', 'tmp_name' => $tmp ),
+			array( 'name' => ( $alt ? 'via-adlucem-' : 'va-placeholder-' ) . $key . '.' . $ext, 'tmp_name' => $tmp ),
 			0,
-			'Placeholder — ' . $key
+			$alt ? $alt : 'Placeholder — ' . $key
 		);
 		if ( is_wp_error( $id ) ) {
 			continue;
 		}
 		update_post_meta( $id, '_va_seed', 'media-' . $key );
-		update_post_meta( $id, '_wp_attachment_image_alt', '' );
+		update_post_meta( $id, '_wp_attachment_image_alt', $alt );
 		pll_set_post_language( $id, 'en' );
 		$ids[ $key ] = (int) $id;
 	}
