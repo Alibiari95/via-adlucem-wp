@@ -10,7 +10,10 @@ defined( 'ABSPATH' ) || exit;
 <footer class="va-footer">
 	<div class="va-footer__cta">
 		<div class="va-container">
-			<p class="va-footer__cta-title"><?php echo esc_html( va_t( 'footer_cta' ) ); ?></p>
+			<div class="va-footer__cta-copy">
+				<p class="va-footer__cta-title"><?php echo esc_html( va_t( 'footer_cta' ) ); ?></p>
+				<p class="va-footer__cta-text"><?php echo esc_html( va_t( 'footer_cta_text' ) ); ?></p>
+			</div>
 			<a class="va-btn va-btn--accent" href="<?php echo esc_url( va_page_url_by_role( 'contact' ) ); ?>"><?php echo esc_html( va_t( 'footer_button' ) ); ?></a>
 		</div>
 	</div>

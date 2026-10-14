@@ -62,6 +62,14 @@ class VA_Hero_Slider_Widget extends Widget_Base {
 			)
 		);
 		$repeater->add_control(
+			'subtitle',
+			array(
+				'label' => 'Sub-headline',
+				'type'  => Controls_Manager::TEXTAREA,
+				'rows'  => 3,
+			)
+		);
+		$repeater->add_control(
 			'button_text',
 			array(
 				'label' => 'Button text',
@@ -132,6 +140,9 @@ class VA_Hero_Slider_Widget extends Widget_Base {
 							<?php endif; ?>
 							<?php // First slide title is the page H1; the others are visually identical. ?>
 							<<?php echo 0 === $i ? 'h1' : 'h2'; ?> class="va-hero__title"><?php echo nl2br( esc_html( $slide['title'] ) ); ?></<?php echo 0 === $i ? 'h1' : 'h2'; ?>>
+							<?php if ( ! empty( $slide['subtitle'] ) ) : ?>
+								<p class="va-hero__subtitle"><?php echo esc_html( $slide['subtitle'] ); ?></p>
+							<?php endif; ?>
 							<?php if ( ! empty( $slide['button_text'] ) && ! empty( $slide['button_link']['url'] ) ) : ?>
 								<a class="va-btn va-btn--light" href="<?php echo esc_url( $slide['button_link']['url'] ); ?>"<?php echo ! empty( $slide['button_link']['is_external'] ) ? ' target="_blank" rel="noopener"' : ''; ?>><?php echo esc_html( $slide['button_text'] ); ?></a>
 							<?php endif; ?>
