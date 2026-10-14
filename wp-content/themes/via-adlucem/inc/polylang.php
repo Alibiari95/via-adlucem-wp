@@ -34,6 +34,45 @@ function va_strings() {
 	);
 }
 
+/*
+ * SEO (Hostinger AI plugin stores the per-page SEO title and description).
+ * - A custom SEO title already contains the brand, so don't append the site name again.
+ * - The services overview is an archive: Hostinger would print the first service's
+ *   description there, so it gets the translated overview intro instead.
+ */
+add_filter(
+	'document_title_parts',
+	function ( $parts ) {
+		if ( is_singular() && get_post_meta( get_queried_object_id(), 'hostinger_ai_assistant_seo_title', true ) ) {
+			unset( $parts['site'], $parts['tagline'] );
+		}
+		return $parts;
+	},
+	20
+);
+
+add_filter(
+	'get_post_metadata',
+	function ( $value, $object_id, $meta_key ) {
+		if ( in_array( $meta_key, array( 'hostinger_ai_assistant_seo_title', 'hostinger_ai_assistant_seo_description' ), true ) && ! is_admin() && is_post_type_archive( 'va_service' ) ) {
+			return '';
+		}
+		return $value;
+	},
+	10,
+	3
+);
+
+add_action(
+	'wp_head',
+	function () {
+		if ( is_post_type_archive( 'va_service' ) ) {
+			printf( '<meta name="description" content="%s">' . "\n", esc_attr( va_t( 'services_intro' ) ) );
+		}
+	},
+	1
+);
+
 // Archive heading and <title> for /services/ in the current language.
 add_filter(
 	'post_type_archive_title',
