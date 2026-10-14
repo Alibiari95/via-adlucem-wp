@@ -52,6 +52,21 @@ add_filter(
 	20
 );
 
+// Polylang syncs custom fields between translations; SEO texts are per language, so keep them out of the sync.
+add_filter(
+	'pll_copy_post_metas',
+	function ( $keys ) {
+		return array_values(
+			array_filter(
+				(array) $keys,
+				function ( $key ) {
+					return 0 !== strpos( $key, 'hostinger_ai_assistant_seo' );
+				}
+			)
+		);
+	}
+);
+
 // Hello Elementor prints the excerpt as a second meta description; skip it when an SEO description is set.
 add_filter(
 	'hello_elementor_description_meta_tag',
