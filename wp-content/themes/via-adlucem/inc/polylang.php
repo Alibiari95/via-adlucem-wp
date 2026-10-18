@@ -32,6 +32,15 @@ function va_strings() {
 		'services_intro' => 'Design and engineering services for developers, SMEs and project owners across Azerbaijan and Central Asia.',
 		'other_services' => 'Other services',
 		'learn_more'     => 'Learn more',
+		// Projects archive / single.
+		'home'           => 'Home',
+		'projects'       => 'Projects',
+		'all'            => 'All',
+		'all_projects'   => 'All projects',
+		'no_projects'    => 'No projects here yet.',
+		'share'          => 'Share',
+		'prev_project'   => 'Previous project',
+		'next_project'   => 'Next project',
 	);
 }
 
@@ -101,7 +110,8 @@ add_action(
 add_filter(
 	'post_type_archive_title',
 	function ( $title, $post_type ) {
-		return 'va_service' === $post_type ? va_t( 'services' ) : $title;
+		$titles = array( 'va_service' => 'services', 'va_project' => 'projects' );
+		return isset( $titles[ $post_type ] ) ? va_t( $titles[ $post_type ] ) : $title;
 	},
 	10,
 	2

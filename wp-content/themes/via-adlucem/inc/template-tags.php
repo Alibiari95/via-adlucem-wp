@@ -45,6 +45,38 @@ function va_logo( $variant = 'dark' ) {
 }
 
 /**
+ * Day + month badge (Archicon style) for the current post.
+ */
+function va_date_badge() {
+	printf(
+		'<span class="va-date"><span class="va-date__day">%s</span><span class="va-date__month">%s</span></span>',
+		esc_html( get_the_date( 'j' ) ),
+		esc_html( get_the_date( 'M' ) )
+	);
+}
+
+/**
+ * Comma-separated project category links for the current post.
+ */
+function va_project_categories( $class ) {
+	$list = get_the_term_list( get_the_ID(), 'va_project_category', '', ', ' );
+	if ( $list && ! is_wp_error( $list ) ) {
+		echo '<p class="' . esc_attr( $class ) . '">' . $list . '</p>'; // phpcs:ignore WordPress.Security.EscapeOutput -- core-escaped links.
+	}
+}
+
+/**
+ * Breadcrumb trail: Home / item / item…  Each item is array( label, url|null ).
+ */
+function va_breadcrumb( array $items ) {
+	$parts = array( '<a href="' . esc_url( va_home_url() ) . '">' . esc_html( va_t( 'home' ) ) . '</a>' );
+	foreach ( $items as $item ) {
+		$parts[] = $item[1] ? '<a href="' . esc_url( $item[1] ) . '">' . esc_html( $item[0] ) . '</a>' : '<span aria-current="page">' . esc_html( $item[0] ) . '</span>';
+	}
+	echo '<nav class="va-breadcrumb" aria-label="Breadcrumb">' . implode( '<span class="va-breadcrumb__sep" aria-hidden="true">/</span>', $parts ) . '</nav>'; // phpcs:ignore WordPress.Security.EscapeOutput -- escaped above.
+}
+
+/**
  * Social links that have a URL set in the Customizer.
  */
 function va_social_links() {
