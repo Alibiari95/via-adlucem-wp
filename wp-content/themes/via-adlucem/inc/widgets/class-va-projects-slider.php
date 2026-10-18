@@ -110,7 +110,7 @@ class VA_Projects_Slider_Widget extends Widget_Base {
 	 * Cards as array( image, title, category, url ): the newest projects in the current
 	 * language, or the hand-picked repeater items.
 	 */
-	private function get_items( $settings ) {
+	private function get_project_items( $settings ) {
 		if ( 'manual' !== ( $settings['source'] ?? 'latest' ) && post_type_exists( 'va_project' ) ) {
 			$posts = get_posts(
 				array(
@@ -148,7 +148,7 @@ class VA_Projects_Slider_Widget extends Widget_Base {
 
 	protected function render() {
 		$settings = $this->get_settings_for_display();
-		$items    = $this->get_items( $settings );
+		$items    = $this->get_project_items( $settings );
 		if ( ! $items ) {
 			return;
 		}
