@@ -125,3 +125,16 @@ add_filter(
 	10,
 	2
 );
+
+// Readable addresses: WordPress transliterates most accented letters but not Azerbaijani ə or the Uzbek ʻ / ʼ.
+add_filter(
+	'sanitize_title',
+	function ( $title, $raw_title = '', $context = 'display' ) {
+		if ( 'save' !== $context ) {
+			return $title;
+		}
+		return strtr( $title, array( 'ə' => 'e', 'Ə' => 'e', 'ʻ' => '', 'ʼ' => '', '‘' => '', '’' => '' ) );
+	},
+	9,
+	3
+);

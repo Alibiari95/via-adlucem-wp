@@ -31,7 +31,7 @@ return array(
 			),
 		),
 		array(
-			'slug'    => 'atrium-ofis',
+			'slug'    => 'atrium-ofisi',
 			'title'   => 'Atrium Ofis',
 			'excerpt' => 'Kunduzgi yorugʻlik tushadigan atrium atrofida qurilgan, integratsiyalashgan konstruktiv va MEP loyihali oʻn ikki qavatli ofis binosi.',
 			'texts'   => array(

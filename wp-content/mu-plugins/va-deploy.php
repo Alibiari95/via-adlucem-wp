@@ -77,6 +77,8 @@ function va_deploy( $ref = 'main' ) {
 	}
 
 	$installed = array();
+	$swapped   = array(); // Folders whose previous version sits in "<folder>.va-old" until the smoke test passes.
+	$mu_backup = array();
 	foreach ( array( 'themes', 'plugins' ) as $type ) {
 		foreach ( glob( $src . '/' . $type . '/*', GLOB_ONLYDIR ) ?: array() as $dir ) {
 			// Copy next to the target, then swap with renames so live requests never see a half-copied folder.
@@ -88,17 +90,42 @@ function va_deploy( $ref = 'main' ) {
 				rename( $target, $target . '.va-old' );
 			}
 			rename( $target . '.va-new', $target );
-			va_deploy_rrmdir( $target . '.va-old' );
+			$swapped[]   = $target;
 			$installed[] = $type . '/' . basename( $dir );
 		}
 	}
 	foreach ( glob( $src . '/mu-plugins/*.php' ) ?: array() as $file ) {
-		copy( $file, WPMU_PLUGIN_DIR . '/' . basename( $file ) );
+		$target = WPMU_PLUGIN_DIR . '/' . basename( $file );
+		$mu_backup[ $target ] = file_exists( $target ) ? file_get_contents( $target ) : null;
+		copy( $file, $target );
 		$installed[] = 'mu-plugins/' . basename( $file );
 	}
 
 	if ( function_exists( 'opcache_reset' ) ) {
 		opcache_reset();
+	}
+
+	// Smoke test: the home page must render for a logged-in admin (Coming Soon mode hides errors from visitors).
+	$broken = va_deploy_smoke_test();
+	if ( $broken ) {
+		foreach ( $swapped as $target ) {
+			if ( is_dir( $target . '.va-old' ) ) {
+				va_deploy_rrmdir( $target . '.va-bad' );
+				rename( $target, $target . '.va-bad' );
+				rename( $target . '.va-old', $target );
+				va_deploy_rrmdir( $target . '.va-bad' );
+			}
+		}
+		foreach ( $mu_backup as $target => $previous ) {
+			null === $previous ? unlink( $target ) : file_put_contents( $target, $previous );
+		}
+		if ( function_exists( 'opcache_reset' ) ) {
+			opcache_reset();
+		}
+		return new WP_Error( 'va_deploy_rolled_back', 'The site broke after installing ' . $ref . ' (' . $broken . '); the previous version was restored.' );
+	}
+	foreach ( $swapped as $target ) {
+		va_deploy_rrmdir( $target . '.va-old' );
 	}
 	update_option( 'va_deploy_last', array( 'ref' => $ref, 'time' => time(), 'installed' => $installed ), false );
 
@@ -107,6 +134,24 @@ function va_deploy( $ref = 'main' ) {
 		'installed' => $installed,
 		'repo_root' => $root, // Kept until the next deploy so content/ and tools/ can be used.
 	);
+}
+
+/**
+ * Loads a few pages as the first administrator.
+ *
+ * @return string Empty when fine, otherwise what failed.
+ */
+function va_deploy_smoke_test() {
+	$admins = get_users( array( 'role' => 'administrator', 'number' => 1, 'fields' => 'ID' ) );
+	$cookie = $admins ? array( new WP_Http_Cookie( array( 'name' => LOGGED_IN_COOKIE, 'value' => wp_generate_auth_cookie( (int) $admins[0], time() + 300, 'logged_in' ) ) ) ) : array();
+	foreach ( apply_filters( 'va_deploy_smoke_urls', array( home_url( '/' ), home_url( '/contact/' ) ) ) as $url ) {
+		$res  = wp_remote_get( add_query_arg( 'va_smoke', time(), $url ), array( 'timeout' => 30, 'cookies' => $cookie ) );
+		$code = is_wp_error( $res ) ? 0 : wp_remote_retrieve_response_code( $res );
+		if ( $code >= 500 || ( 0 === $code ) ) {
+			return $url . ' returned ' . ( $code ? $code : $res->get_error_message() );
+		}
+	}
+	return '';
 }
 
 function va_deploy_copy( $from, $to ) {
