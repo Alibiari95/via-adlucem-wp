@@ -48,6 +48,25 @@ class VA_Projects_Slider_Widget extends Widget_Base {
 			)
 		);
 		$this->add_control(
+			'show_arrows',
+			array(
+				'label'        => 'Show arrows',
+				'type'         => Controls_Manager::SWITCHER,
+				'return_value' => 'yes',
+				'default'      => 'yes',
+			)
+		);
+		$this->add_control(
+			'show_all_link',
+			array(
+				'label'        => 'Show "All projects" link',
+				'type'         => Controls_Manager::SWITCHER,
+				'return_value' => 'yes',
+				'default'      => 'yes',
+				'condition'    => array( 'source' => 'latest' ),
+			)
+		);
+		$this->add_control(
 			'count',
 			array(
 				'label'     => 'Number of projects',
@@ -152,7 +171,8 @@ class VA_Projects_Slider_Widget extends Widget_Base {
 		if ( ! $items ) {
 			return;
 		}
-		$archive = 'manual' !== ( $settings['source'] ?? 'latest' ) && post_type_exists( 'va_project' ) ? get_post_type_archive_link( 'va_project' ) : '';
+		$archive = 'manual' !== ( $settings['source'] ?? 'latest' ) && 'yes' === ( $settings['show_all_link'] ?? 'yes' ) && post_type_exists( 'va_project' ) ? get_post_type_archive_link( 'va_project' ) : '';
+		$arrows  = 'yes' === ( $settings['show_arrows'] ?? 'yes' );
 		?>
 		<div class="va-projects">
 			<div class="va-projects__track" tabindex="0">
@@ -173,13 +193,17 @@ class VA_Projects_Slider_Widget extends Widget_Base {
 					</<?php echo $tag; // phpcs:ignore ?>>
 				<?php endforeach; ?>
 			</div>
-			<div class="va-projects__nav">
-				<button type="button" class="va-projects__arrow va-projects__arrow--prev" aria-label="Previous"><span aria-hidden="true">&larr;</span></button>
-				<button type="button" class="va-projects__arrow va-projects__arrow--next" aria-label="Next"><span aria-hidden="true">&rarr;</span></button>
-				<?php if ( $archive && function_exists( 'va_t' ) ) : ?>
-					<a class="va-link va-projects__all" href="<?php echo esc_url( $archive ); ?>"><?php echo esc_html( va_t( 'all_projects' ) ); ?> <span aria-hidden="true">&rarr;</span></a>
-				<?php endif; ?>
-			</div>
+			<?php if ( $arrows || $archive ) : ?>
+				<div class="va-projects__nav">
+					<?php if ( $arrows ) : ?>
+						<button type="button" class="va-projects__arrow va-projects__arrow--prev" aria-label="Previous"><span aria-hidden="true">&larr;</span></button>
+						<button type="button" class="va-projects__arrow va-projects__arrow--next" aria-label="Next"><span aria-hidden="true">&rarr;</span></button>
+					<?php endif; ?>
+					<?php if ( $archive && function_exists( 'va_t' ) ) : ?>
+						<a class="va-link va-projects__all" href="<?php echo esc_url( $archive ); ?>"><?php echo esc_html( va_t( 'all_projects' ) ); ?> <span aria-hidden="true">&rarr;</span></a>
+					<?php endif; ?>
+				</div>
+			<?php endif; ?>
 		</div>
 		<?php
 	}
