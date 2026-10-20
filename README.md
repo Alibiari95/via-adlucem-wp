@@ -1,6 +1,6 @@
 # via-adlucem-wp
 
-Code for [via-adlucem.com](https://via-adlucem.com): an Archicon-inspired architecture-studio site built on WordPress with Elementor, Polylang (EN default, AZ, UZ) and Contact Form 7.
+Code for [via-adlucem.com](https://via-adlucem.com): an Archicon-inspired architecture-studio site built on WordPress with Elementor, Polylang (EN default, AZ, UZ, RU) and Contact Form 7.
 
 ## Layout
 
@@ -16,7 +16,9 @@ Code for [via-adlucem.com](https://via-adlucem.com): an Archicon-inspired archit
 | `content/media/` | Real photos used by the services pages |
 | `content/placeholders/` | Placeholder images in the brand palette (replace in the Media Library) |
 | `tools/seed.php` | One-time setup: languages, Elementor kit, forms, pages, menus, Polylang strings |
-| `content/projects/{en,az,uz}.php` + `tools/seed-projects.php` | 3 sample projects, categories, tags, menu item |
+| `content/projects/{az,en,uz,ru}.php` + `tools/seed-projects.php` | The projects (AZ is the source), categories, tags, menu item; re-running restores them |
+| `content/ru/site.php` + `tools/add-russian.php` | Russian: language, home/contact/services pages (copies of the English pages with translated texts), form, menu, strings |
+| `content/home/banner.php` + `tools/home-banner.php` | Full-width photo band between About and What we do on every home page |
 | `tools/seed-services.php` | One-time setup of the 4 services × 3 languages, their SEO meta and menu entries |
 
 ## Theme

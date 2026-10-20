@@ -34,6 +34,9 @@ function va_ru_add_language() {
 	if ( is_wp_error( $added ) ) {
 		return $added;
 	}
+	require_once ABSPATH . 'wp-admin/includes/file.php';
+	require_once ABSPATH . 'wp-admin/includes/misc.php';
+	require_once ABSPATH . 'wp-admin/includes/class-wp-upgrader.php';
 	require_once ABSPATH . 'wp-admin/includes/translation-install.php';
 	$pack = wp_download_language_pack( 'ru_RU' );
 	PLL()->model->clean_languages_cache();
