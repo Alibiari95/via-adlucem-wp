@@ -1,68 +1,91 @@
 <?php
 /**
- * Namunaviy loyihalar — Oʻzbek tili (lotin). Same order as en.php.
+ * Loyihalar — Oʻzbek tili (lotin), az.php dan tarjima. Same structure and order as az.php.
  */
 
 return array(
-	'menu'       => 'Loyihalar',
-	'categories' => array(
+	'menu'           => 'Loyihalar',
+	'categories'     => array(
 		'residential'    => 'Turar joy',
 		'commercial'     => 'Tijorat',
 		'infrastructure' => 'Jamoat va infratuzilma',
 	),
-	'tags'       => array(
+	'tags'           => array(
 		'bim'          => 'BIM',
+		'master-plan'  => 'Bosh reja',
 		'architecture' => 'Arxitektura',
 		'structural'   => 'Konstruktiv muhandislik',
 		'mep'          => 'MEP',
 		'civil'        => 'Fuqarolik infratuzilmasi',
+		'agdam'        => 'Agʻdam',
 	),
-	'projects'   => array(
+	'labels'         => array(
+		'location'      => 'Joylashuv',
+		'period'        => 'Davr',
+		'services'      => 'Xizmatlar',
+		'overview'      => 'Loyiha haqida umumiy maʼlumot',
+		'features'      => 'Hudud xususiyatlari va muhandislik yondashuvi',
+		'objects'       => 'Loyiha obyektlari va texnik koʻrsatkichlar',
+		'col_object'    => 'Obyekt',
+		'col_area'      => 'Hudud maydoni',
+		'col_elevation' => 'Mutlaq balandlik (±0.00)',
+	),
+	'services_intro' => 'Ichki ekspertizamizga tayangan holda koʻrsatgan asosiy loyihalash xizmatlarimiz:',
+	'services_list'  => array( 'Bosh reja', 'Arxitektura', 'Konstruksiya', 'Muhandislik tizimlari' ),
+	'overview'       => 'Ushbu kompleks loyiha buyurtmachimiz — «Qorabogʻ iqtisodiy rayonida tiklash, qurilish va boshqaruv xizmati» ommaviy-huquqiy shaxsi bilan yaqin hamkorlikda, tegishli shartnoma va loyiha topshirigʻi asosida ishlab chiqilgan. Loyihalash jarayonida Agʻdam shahrining tasdiqlangan yangi bosh rejasiga muvofiq chegara nuqtalari va jamoamiz tomonidan tayyorlangan hududning topografik xaritasi asos qilib olingan.',
+	'features'       => array(
+		array( 'Relyef va geologiya:', 'Hudud qisman vayronaga uchragan boʻlsa-da, unda oz miqdorda maishiy chiqindilar aralashgan unumdor tuproq qatlami mavjud. Tekis relyefga ega hudud muhandislik-geologik tadqiqotlar natijalariga koʻra 8 balli seysmik zonaga kiritilgan.' ),
+		array( 'Infratuzilma va xavfsizlik:', 'Barcha binolar atrofida yongʻin oʻchirish va tez tibbiy yordam mashinalari manevr qilishi uchun maxsus yoʻllar, shuningdek, qulay va xavfsiz piyodalar harakatini taʼminlaydigan bino atrofi yoʻlaklari nazarda tutilgan.' ),
+		array( 'Obodonlashtirish:', 'Loyihalanayotgan hududlar yangi bosh rejaga muvofiq yashil zonalar, tadbirlar uchun maydonchalar va zamonaviy yoʻl-yoʻlak infratuzilmasi bilan toʻliq obodonlashtiriladi.' ),
+	),
+	'projects'       => array(
 		array(
-			'slug'    => 'kaspiy-rezidensiyasi',
-			'title'   => 'Kaspiy Rezidensiyasi',
-			'excerpt' => 'Kaspiy sohilida toʻliq muvofiqlashtirilgan BIM modeli bilan amalga oshirilgan yetti qavatli turar joy binosi.',
-			'texts'   => array(
-				'Kaspiy Rezidensiyasi — 42 ta xonadon, yer osti avtoturargohi va obodonlashtirilgan hovlisi boʻlgan yetti qavatli turar joy binosi. Via Ad Lucem konsepsiyadan qurilish hujjatlarigacha arxitektura loyihasi, konstruktiv muhandislik va MEP tizimlarini ishlab chiqdi.',
-				'Birinchi kundan muvofiqlashtirilgan model',
-				'Barcha boʻlimlar yagona BIM modelida ishladi, shu sababli arxitektura rejalari, konstruktiv toʻrlar va muhandislik tizimlari doimiy ravishda bir-biri bilan tekshirildi. Chizmalar qurilish maydoniga yetib borguncha 300 dan ortiq kolliziya bartaraf etildi.',
-				'Model qarorlarni erta — ularni oʻzgartirish hali oson boʻlgan paytda — qabul qilish imkonini berdi.',
-				'Natijada muhandislik tizimlari koʻzdan pinhon qoladigan, sokin va yorugʻlikka toʻla bino barpo etildi.',
+			'title'         => 'Göytəpə: kompleks ishchi loyihani tayyorlash',
+			'slug'          => 'goytepe-kompleks-ishchi-loyiha',
+			'excerpt'       => 'Agʻdam tumani Göytəpə qishlogʻida bolalar bogʻchasi, tibbiyot punkti, maʼmuriy bino va maktabdan iborat majmuaning bosh reja, arxitektura, konstruksiya va muhandislik tizimlari loyihasi.',
+			'location'      => 'Agʻdam tumani, Göytəpə qishlogʻi',
+			'objects_intro' => 'Loyiha doirasida har bir binaning 1-qavati pol sathi shartli ravishda 0.000 deb qabul qilingan. Quyida majmuaga kiruvchi asosiy binolarning bosh reja koʻrsatkichlari keltirilgan:',
+			'objects'       => array(
+				array( '2 qavatli, 80 oʻrinli bolalar bogʻchasi (1-bosqich)', '1.28 ga', '+287.90' ),
+				array( '1 qavatli tibbiyot punkti', '3.94 ga', '+286.65' ),
+				array( '2 qavatli maʼmuriy bino', '1.15 ga', '+286.40' ),
+				array( '2 qavatli, 432 oʻrinli maktab binosi', '2.59 ga', '+287.20' ),
 			),
 		),
 		array(
-			'slug'    => 'atrium-ofisi',
-			'title'   => 'Atrium Ofis',
-			'excerpt' => 'Kunduzgi yorugʻlik tushadigan atrium atrofida qurilgan, integratsiyalashgan konstruktiv va MEP loyihali oʻn ikki qavatli ofis binosi.',
-			'texts'   => array(
-				'Atrium Ofis — kunduzgi yorugʻlikni qavatlarning ichkarisigacha yetkazadigan markaziy atrium atrofida qurilgan oʻn ikki qavatli tijorat binosi. Jamoamiz butun loyiha boʻyicha konstruktiv muhandislik, MEP loyihalash va texnik hujjatlar xizmatlarini koʻrsatdi.',
-				'Moslashuvchan ish makoni uchun muhandislik',
-				'Katta oraliqli qavatlar ijarachilarga ustunsiz ochiq makon beradi, koʻtarilgan pol tizimi va muvofiqlashtirilgan shift osti boʻshligʻi esa elektr, maʼlumot va havo taqsimotini oson oʻzgartirish imkonini beradi.',
-				'Moslashuvchan qavatlar va muvofiqlashtirilgan tizimlar binoga ijarachilari bilan birga oʻzgarish imkonini beradi.',
-				'Energiya modellashtirish fasad va HVAC loyihasini yoʻnaltirib, binoning kutilayotgan sovutish yuklamasi va ekspluatatsiya xarajatlarini kamaytirdi.',
+			'title'         => 'Güllücə: kompleks ishchi loyihani tayyorlash',
+			'slug'          => 'gulluce-kompleks-ishchi-loyiha',
+			'excerpt'       => 'Agʻdam tumani Güllücə qishlogʻida maktablar, bolalar bogʻchalari, maʼmuriy bino, tibbiyot punkti va qabriston majmuasining bosh reja, arxitektura, konstruksiya va muhandislik tizimlari loyihasi.',
+			'location'      => 'Agʻdam tumani, Güllücə qishlogʻi',
+			'objects_intro' => 'Loyiha doirasida har bir binaning 1-qavati pol sathi shartli ravishda 0.000 deb qabul qilingan. Quyida majmuaga kiruvchi turli maqsadli binolar va zonalarning bosh reja koʻrsatkichlari keltirilgan:',
+			'objects'       => array(
+				array( '2 qavatli, 80 oʻrinli bolalar bogʻchasi (2-bosqich)', '2.23 ga', '+248.35' ),
+				array( '2 qavatli maʼmuriy bino va 1 qavatli tibbiyot punkti', '5.63 ga', 'Maʼmuriy bino: +229.55 · Tibbiyot punkti: +228.05' ),
+				array( '2 qavatli, 480 oʻrinli maktab binosi va 2 qavatli, 120 oʻrinli bolalar bogʻchasi (1-bosqich)', '5.36 ga', 'Maktab binosi: +235.60 · Bogʻcha binosi: +234.55' ),
+				array( '2 qavatli, 480 oʻrinli maktab binosi va 2 qavatli, 80 oʻrinli bolalar bogʻchasi (2-bosqich)', '3.75 ga', 'Maktab binosi: +218.83 · Bolalar bogʻchasi: +219.52' ),
+				array( 'Qabriston majmuasi (konservatsiya qilingan)', '2.86 ga', 'Gʻassolxona: +242.58 · Qoʻriqlash budkasi: +241.44' ),
 			),
 		),
 		array(
-			'slug'    => 'bandargoh-pavilyoni',
-			'title'   => 'Bandargoh Pavilyoni',
-			'excerpt' => 'Yangi tashqi kommunikatsiyalar, yomgʻir suvlarini boshqarish tizimi va kirish yoʻllariga ega jamoat pavilyoni va sayr yoʻlagi.',
-			'texts'   => array(
-				'Bandargoh Pavilyoni — yangi sohil sayr yoʻlagida joylashgan jamoat pavilyoni. Binoning oʻzi bilan birga Via Ad Lucem hudud infratuzilmasini ham loyihaladi: tashqi suv, gaz va elektr ulanishlari, kirish yoʻllari va yomgʻir suvi drenaji.',
-				'Koʻzdan pinhon infratuzilma',
-				'Barcha kommunikatsiya trassalari landshaft bilan birga 3D formatda modellashtirildi, shu sababli xandaqlar, quduqlar va drenaj liniyalari daraxtlar, yoʻlak qoplamasi va oʻrindiqlar atrofida hech qanday kolliziyasiz joylashdi.',
-				'Yaxshi infratuzilma loyihaning hech kim sezmaydigan qismidir — chunki u shunchaki ishlaydi.',
-				'Barqaror drenaj ariqchalari sayr yoʻlagidan yer usti suvlarini yigʻib, ularni sekin chiqaradi va bandargohni eng yuqori oqimlardan himoya qiladi.',
+			'title'         => 'Salahlı: kompleks ishchi loyihani tayyorlash',
+			'slug'          => 'salahli-kompleks-ishchi-loyiha',
+			'excerpt'       => 'Agʻdam tumani Salahlı qishlogʻida maʼmuriy bino, tibbiyot punkti, maktab va bolalar bogʻchasining bosh reja, arxitektura, konstruksiya va muhandislik tizimlari loyihasi.',
+			'location'      => 'Agʻdam tumani, Salahlı qishlogʻi',
+			'objects_intro' => 'Loyiha doirasida har bir binaning 1-qavati pol sathi shartli ravishda 0.000 deb qabul qilingan. Quyida majmuaga kiruvchi turli maqsadli binolarning bosh reja koʻrsatkichlari keltirilgan:',
+			'objects'       => array(
+				array( '2 qavatli maʼmuriy bino va 1 qavatli tibbiyot punkti', '4.26 ga', 'Maʼmuriy bino: +344.70 · Tibbiyot punkti: +343.65' ),
+				array( '2 qavatli, 480 oʻrinli maktab binosi va 2 qavatli, 80 oʻrinli bolalar bogʻchasi (2-bosqich)', '3.75 ga', 'Maktab binosi: +218.83 · Bolalar bogʻchasi: +219.52' ),
 			),
 		),
 	),
-	'strings'    => array(
-		'Projects'             => 'Loyihalar',
-		'All'                  => 'Barchasi',
-		'Home'                 => 'Bosh sahifa',
-		'All projects'         => 'Barcha loyihalar',
+	'strings'        => array(
+		'Projects'              => 'Loyihalar',
+		'All'                   => 'Barchasi',
+		'Home'                  => 'Bosh sahifa',
+		'All projects'          => 'Barcha loyihalar',
 		'No projects here yet.' => 'Bu yerda hozircha loyihalar yoʻq.',
-		'Share'                => 'Ulashish',
-		'Previous project'     => 'Oldingi loyiha',
-		'Next project'         => 'Keyingi loyiha',
+		'Share'                 => 'Ulashish',
+		'Previous project'      => 'Oldingi loyiha',
+		'Next project'          => 'Keyingi loyiha',
 	),
 );

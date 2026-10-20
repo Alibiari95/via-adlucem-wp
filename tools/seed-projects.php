@@ -1,13 +1,14 @@
 <?php
 /**
- * Seeds 3 sample projects × EN/AZ/UZ (block-editor content, categories, tags, cover
- * images), adds "Projects" to each language menu, translates the project strings and
- * points the home slider's "View Portfolio" button at the projects page.
+ * Creates or updates the projects from content/projects/{az,en,uz,ru}.php (az is the source),
+ * with their categories, tags, cover photos and block-editor content, linked as Polylang
+ * translations. Also makes sure each language menu has a "Projects" item.
  *
  *     require $root . '/tools/seed-projects.php';
  *     return va_seed_projects( $root );
  *
- * Idempotent: existing items (tracked by `_va_seed` meta) are kept.
+ * Existing projects are found by their `_va_seed` meta (project-1-en …) and overwritten, so
+ * re-running brings the site back to the content files. Languages missing from Polylang are skipped.
  */
 
 defined( 'ABSPATH' ) || exit;
@@ -15,7 +16,23 @@ defined( 'ABSPATH' ) || exit;
 require_once __DIR__ . '/update-home.php';
 
 if ( ! defined( 'VA_SEEDING' ) ) {
-	define( 'VA_SEEDING', true ); // The sample translations are written here; skip auto-translation.
+	define( 'VA_SEEDING', true ); // All languages are written here; skip auto-translation.
+}
+
+/**
+ * Shared layout of each project (same index as the `projects` lists in the content files).
+ * `seed` keeps the post IDs of the first sample projects: project-3 (newest) → Göytəpə, etc.
+ */
+function va_projects_layout() {
+	return array(
+		array( 'seed' => 3, 'photo' => 'project-goytepe', 'date' => '2026-10-06 10:00:00', 'period' => '2024–2026', 'category' => 'infrastructure', 'tags' => array( 'master-plan', 'architecture', 'structural', 'mep', 'agdam' ) ),
+		array( 'seed' => 2, 'photo' => 'project-gulluce', 'date' => '2026-09-22 10:00:00', 'period' => '2024–2026', 'category' => 'infrastructure', 'tags' => array( 'master-plan', 'architecture', 'structural', 'mep', 'agdam' ) ),
+		array( 'seed' => 1, 'photo' => 'project-salahli', 'date' => '2026-09-08 10:00:00', 'period' => '2024–2026', 'category' => 'infrastructure', 'tags' => array( 'master-plan', 'architecture', 'structural', 'mep', 'agdam' ) ),
+	);
+}
+
+function va_projects_langs() {
+	return array_values( array_intersect( array( 'az', 'en', 'uz', 'ru' ), pll_languages_list() ) );
 }
 
 function va_seed_projects( $root ) {
@@ -23,44 +40,51 @@ function va_seed_projects( $root ) {
 		return new WP_Error( 'va_seed', 'Deploy mu-plugins/va-projects.php first.' );
 	}
 	$log     = array();
+	$langs   = va_projects_langs();
 	$content = array();
-	foreach ( VA_SEED_LANGS as $lang ) {
+	foreach ( $langs as $lang ) {
 		$content[ $lang ] = require $root . '/content/projects/' . $lang . '.php';
 	}
-	$en = $content['en'];
 
 	// Terms in all languages, linked as translations.
-	$terms = array(); // [ taxonomy ][ key ][ lang ] => term_id
+	$terms = array();
 	foreach ( array( 'va_project_category' => 'categories', 'va_project_tag' => 'tags' ) as $taxonomy => $group ) {
-		foreach ( array_keys( $en[ $group ] ) as $key ) {
-			foreach ( VA_SEED_LANGS as $lang ) {
+		foreach ( array_keys( $content['az'][ $group ] ) as $key ) {
+			foreach ( $langs as $lang ) {
 				$terms[ $taxonomy ][ $key ][ $lang ] = va_seed_project_term( $taxonomy, $key, $lang, $content[ $lang ][ $group ][ $key ] );
 			}
 			pll_save_term_translations( $terms[ $taxonomy ][ $key ] );
 		}
 	}
-	$log[] = 'terms: ' . wp_json_encode( $terms );
+	$log[] = 'terms ok';
 
-	// Placeholder images already in the Media Library.
-	$media = array();
-	foreach ( glob( $root . '/content/placeholders/*.jpg' ) as $file ) {
-		$key           = basename( $file, '.jpg' );
-		$ids           = get_posts( array( 'post_type' => 'attachment', 'post_status' => 'inherit', 'meta_key' => '_va_seed', 'meta_value' => 'media-' . $key, 'fields' => 'ids', 'numberposts' => 1, 'lang' => '' ) );
-		$media[ $key ] = $ids ? (int) $ids[0] : 0;
-	}
+	$photos = va_seed_media(
+		$root . '/content/media',
+		'webp',
+		array(
+			'project-goytepe'      => 'Architectural floor plan with a house model, pencils and rulers',
+			'project-gulluce'      => 'Engineer and client reviewing drawings on a construction site',
+			'project-salahli'      => 'Architect drawing on floor plans with a pencil',
+			'floor-plans'          => 'Architectural floor plans with a spirit level, keys and a safety helmet',
+			'engineers-blueprints' => 'Two engineers in hard hats reviewing blueprints at a concrete structure',
+			'engineers-shadows'    => 'Engineers in hard hats on site, casting shadows on a white wall',
+			'pipeline-walkway'     => 'Large steel pipeline with valves and a service walkway',
+			'pipes-tiles'          => 'Painted plumbing pipes and fittings against a tiled wall',
+		)
+	);
 
 	$ids = array();
-	foreach ( $en['projects'] as $i => $layout ) {
-		foreach ( VA_SEED_LANGS as $lang ) {
-			$ids[ $i ][ $lang ] = va_seed_project( $i, $lang, $layout, $content[ $lang ]['projects'][ $i ], $media, $terms );
+	foreach ( va_projects_layout() as $i => $layout ) {
+		foreach ( $langs as $lang ) {
+			$ids[ $i ][ $lang ] = va_seed_project( $layout, $content[ $lang ], $content[ $lang ]['projects'][ $i ], $lang, $photos, $terms );
 		}
-		pll_save_post_translations( $ids[ $i ] );
+		pll_save_post_translations( array_filter( $ids[ $i ] ) );
 	}
 	$log[] = 'projects: ' . wp_json_encode( $ids );
 
 	$log[] = va_seed_projects_menus( $content );
 
-	foreach ( VA_SEED_LANGS as $lang ) {
+	foreach ( $langs as $lang ) {
 		if ( empty( $content[ $lang ]['strings'] ) ) {
 			continue;
 		}
@@ -73,23 +97,7 @@ function va_seed_projects( $root ) {
 	}
 	$log[] = 'strings translated';
 
-	// Home slider: "View Portfolio" → projects page in each language.
-	foreach ( VA_SEED_LANGS as $lang ) {
-		$page_id = va_update_page_id( 'page-home-' . $lang );
-		$data    = $page_id ? json_decode( get_post_meta( $page_id, '_elementor_data', true ), true ) : null;
-		if ( isset( $data[0]['elements'][0]['settings']['slides'][1] ) ) {
-			$data[0]['elements'][0]['settings']['slides'][1]['button_link']['url'] = home_url( 'en' === $lang ? '/projects/' : '/' . $lang . '/projects/' );
-			update_post_meta( $page_id, '_elementor_data', wp_slash( wp_json_encode( $data ) ) );
-			delete_post_meta( $page_id, '_elementor_css' );
-		}
-	}
-	$log[] = 'home: View Portfolio → projects page';
-
-	if ( class_exists( '\Elementor\Plugin' ) ) {
-		\Elementor\Plugin::$instance->files_manager->clear_cache();
-	}
 	wp_cache_flush();
-	$log[] = 'Then run flush_rewrite_rules() in a new request.';
 	return $log;
 }
 
@@ -97,6 +105,7 @@ function va_seed_project_term( $taxonomy, $key, $lang, $name ) {
 	$seed     = $taxonomy . '-' . $key . '-' . $lang;
 	$existing = get_terms( array( 'taxonomy' => $taxonomy, 'hide_empty' => false, 'meta_key' => '_va_seed', 'meta_value' => $seed, 'fields' => 'ids', 'lang' => '' ) );
 	if ( $existing && ! is_wp_error( $existing ) ) {
+		wp_update_term( (int) $existing[0], $taxonomy, array( 'name' => $name ) );
 		return (int) $existing[0];
 	}
 	$slug = sanitize_title( $name );
@@ -112,80 +121,81 @@ function va_seed_project_term( $taxonomy, $key, $lang, $name ) {
 	return (int) $insert['term_id'];
 }
 
-function va_seed_project( $index, $lang, $layout, $text, $media, $terms ) {
-	$key      = 'project-' . ( $index + 1 ) . '-' . $lang;
+function va_seed_project( $layout, $lang_content, $text, $lang, $photos, $terms ) {
+	$key      = 'project-' . $layout['seed'] . '-' . $lang;
 	$existing = get_posts( array( 'post_type' => 'va_project', 'post_status' => 'any', 'meta_key' => '_va_seed', 'meta_value' => $key, 'fields' => 'ids', 'numberposts' => 1, 'lang' => '' ) );
-	if ( $existing ) {
-		return (int) $existing[0];
-	}
 
-	$id = wp_insert_post(
-		array(
-			'post_type'    => 'va_project',
-			'post_status'  => 'publish',
-			'post_title'   => $text['title'],
-			'post_name'    => $text['slug'],
-			'post_excerpt' => $text['excerpt'],
-			'post_content' => va_seed_project_blocks( $layout['layout'], $text['texts'], $media ),
-			'post_date'    => $layout['date'],
-		),
-		true
+	$postarr = array(
+		'post_type'    => 'va_project',
+		'post_status'  => 'publish',
+		'post_title'   => $text['title'],
+		'post_name'    => $text['slug'],
+		'post_excerpt' => $text['excerpt'],
+		'post_content' => va_seed_project_blocks( $layout, $lang_content, $text ),
+		'post_date'    => $layout['date'],
 	);
+	if ( $existing ) {
+		$postarr['ID'] = (int) $existing[0];
+	}
+	$id = $existing ? wp_update_post( wp_slash( $postarr ), true ) : wp_insert_post( wp_slash( $postarr ), true );
 	if ( is_wp_error( $id ) ) {
 		return 0;
 	}
 	pll_set_post_language( $id, $lang );
 	update_post_meta( $id, '_va_seed', $key );
-	if ( ! empty( $media[ $layout['cover'] ] ) ) {
-		set_post_thumbnail( $id, $media[ $layout['cover'] ] );
+	if ( ! empty( $photos[ $layout['photo'] ] ) ) {
+		set_post_thumbnail( $id, $photos[ $layout['photo'] ] );
 	}
 	wp_set_object_terms( $id, array( $terms['va_project_category'][ $layout['category'] ][ $lang ] ), 'va_project_category' );
 	wp_set_object_terms( $id, array_map( fn( $t ) => $terms['va_project_tag'][ $t ][ $lang ], $layout['tags'] ), 'va_project_tag' );
 	return (int) $id;
 }
 
-/** Block-editor markup from a layout list and the texts (consumed in order). */
-function va_seed_project_blocks( $layout, $texts, $media ) {
-	$image = function ( $key ) use ( $media ) {
-		$id = (int) ( $media[ $key ] ?? 0 );
-		return sprintf(
-			"<!-- wp:image {\"id\":%1\$d,\"sizeSlug\":\"large\",\"linkDestination\":\"none\"} -->\n<figure class=\"wp-block-image size-large\"><img src=\"%2\$s\" alt=\"\" class=\"wp-image-%1\$d\"/></figure>\n<!-- /wp:image -->",
-			$id,
-			esc_url( (string) wp_get_attachment_image_url( $id, 'large' ) )
-		);
+/** Block-editor markup: key facts, services, overview, site features, buildings table. */
+function va_seed_project_blocks( $layout, $c, $text ) {
+	$l      = $c['labels'];
+	$p      = fn( $html ) => "<!-- wp:paragraph -->\n<p>" . $html . "</p>\n<!-- /wp:paragraph -->";
+	$h2     = fn( $title ) => "<!-- wp:heading -->\n<h2 class=\"wp-block-heading\">" . esc_html( $title ) . "</h2>\n<!-- /wp:heading -->";
+	$list   = function ( $items ) {
+		$li = array_map( fn( $html ) => "<!-- wp:list-item -->\n<li>" . $html . "</li>\n<!-- /wp:list-item -->", $items );
+		return "<!-- wp:list -->\n<ul class=\"wp-block-list\">" . implode( "\n\n", $li ) . "</ul>\n<!-- /wp:list -->";
 	};
 	$blocks = array();
-	foreach ( $layout as $item ) {
-		$type = is_array( $item ) ? $item[0] : $item;
-		switch ( $type ) {
-			case 'p':
-				$blocks[] = "<!-- wp:paragraph -->\n<p>" . esc_html( array_shift( $texts ) ) . "</p>\n<!-- /wp:paragraph -->";
-				break;
-			case 'h2':
-				$blocks[] = "<!-- wp:heading -->\n<h2 class=\"wp-block-heading\">" . esc_html( array_shift( $texts ) ) . "</h2>\n<!-- /wp:heading -->";
-				break;
-			case 'quote':
-				$blocks[] = "<!-- wp:quote -->\n<blockquote class=\"wp-block-quote\"><!-- wp:paragraph -->\n<p>" . esc_html( array_shift( $texts ) ) . "</p>\n<!-- /wp:paragraph --></blockquote>\n<!-- /wp:quote -->";
-				break;
-			case 'img':
-				$blocks[] = $image( $item[1] );
-				break;
-			case 'gallery':
-				$blocks[] = "<!-- wp:gallery {\"linkTo\":\"none\"} -->\n<figure class=\"wp-block-gallery has-nested-images columns-default is-cropped\">" . implode( "\n\n", array_map( $image, $item[1] ) ) . "</figure>\n<!-- /wp:gallery -->";
-				break;
-		}
+
+	$blocks[] = $p( '<strong>' . esc_html( $l['location'] ) . ':</strong> ' . esc_html( $text['location'] ) . '<br><strong>' . esc_html( $l['period'] ) . ':</strong> ' . esc_html( $layout['period'] ) );
+
+	$blocks[] = $h2( $l['services'] );
+	$blocks[] = $p( esc_html( $c['services_intro'] ) );
+	$blocks[] = $list( array_map( 'esc_html', $c['services_list'] ) );
+
+	$blocks[] = $h2( $l['overview'] );
+	$blocks[] = $p( esc_html( $c['overview'] ) );
+
+	$blocks[] = $h2( $l['features'] );
+	$blocks[] = $list( array_map( fn( $f ) => '<strong>' . esc_html( $f[0] ) . '</strong> ' . esc_html( $f[1] ), $c['features'] ) );
+
+	$blocks[] = $h2( $l['objects'] );
+	$blocks[] = $p( esc_html( $text['objects_intro'] ) );
+	$rows     = '';
+	foreach ( $text['objects'] as $o ) {
+		$rows .= '<tr><td>' . esc_html( $o[0] ) . '</td><td>' . esc_html( $o[1] ) . '</td><td>' . esc_html( $o[2] ) . '</td></tr>';
 	}
+	$blocks[] = "<!-- wp:table -->\n<figure class=\"wp-block-table\"><table class=\"has-fixed-layout\"><thead><tr><th>" . esc_html( $l['col_object'] ) . '</th><th>' . esc_html( $l['col_area'] ) . '</th><th>' . esc_html( $l['col_elevation'] ) . '</th></tr></thead><tbody>' . $rows . "</tbody></table></figure>\n<!-- /wp:table -->";
+
 	return implode( "\n\n", $blocks );
 }
 
-/** Adds "Projects" (link to the projects page) before "Contact" in each language menu. */
+/** Adds "Projects" (link to the projects page) before "Contact" in each language menu, once. */
 function va_seed_projects_menus( $content ) {
 	$options = get_option( 'polylang' );
 	$theme   = get_stylesheet();
 	$done    = array();
-	foreach ( VA_SEED_LANGS as $lang ) {
+	foreach ( array_keys( $content ) as $lang ) {
 		$menu_id = $options['nav_menus'][ $theme ]['va-primary'][ $lang ] ?? 0;
-		$items   = $menu_id ? wp_get_nav_menu_items( $menu_id, array( 'post_status' => 'any' ) ) : array();
+		if ( ! $menu_id ) {
+			continue;
+		}
+		$items = wp_get_nav_menu_items( $menu_id, array( 'post_status' => 'any' ) );
 		foreach ( (array) $items as $item ) {
 			if ( 'post_type_archive' === $item->type && 'va_project' === $item->object ) {
 				continue 2;

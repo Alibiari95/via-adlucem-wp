@@ -572,7 +572,7 @@ body.admin-bar .va-header { top: 32px; }
 .va-footer__cta .va-container { display: flex; align-items: flex-end; justify-content: space-between; gap: 40px; padding-top: clamp(70px, 9vw, 120px); padding-bottom: clamp(60px, 7vw, 90px); }
 .va-footer__cta-text { max-width: 52ch; margin: 22px 0 0; font-size: 18px; line-height: 1.6; color: rgba(255,255,255,.72); }
 .va-footer__cta .va-btn { flex: none; }
-.va-footer__cta-title { margin: 0; max-width: 16ch; color: #fff; font-size: clamp(34px, 4.6vw, 68px); line-height: 1.05; letter-spacing: -.03em; }
+.va-footer__cta-title { margin: 0; max-width: 24ch; color: #fff; font-size: clamp(30px, 3.6vw, 56px); line-height: 1.08; letter-spacing: -.03em; text-wrap: balance; }
 @media (max-width: 780px) { .va-footer__cta .va-container { flex-direction: column; align-items: flex-start; } }
 
 .va-footer__grid { display: grid; grid-template-columns: 1.6fr 1fr 1fr 1fr; gap: 40px; padding-top: 80px; padding-bottom: 70px; }
@@ -771,6 +771,36 @@ body.admin-bar .va-header { top: 32px; }
 /* Home: "All projects" link next to the slider arrows */
 .va-projects__nav { align-items: center; }
 .va-projects__all { margin-left: auto; }
+
+/* ---------- Home: full-width photo band (container class va-photo-banner) ---------- */
+.e-con.va-photo-banner {
+	--padding-top: clamp(110px, 14vw, 200px); --padding-bottom: clamp(110px, 14vw, 200px);
+	--padding-left: var(--va-gutter); --padding-right: var(--va-gutter);
+	position: relative; overflow: hidden;
+	min-height: min(85vh, 820px);
+	justify-content: center;
+}
+.e-con.va-photo-banner::before {
+	content: ""; position: absolute; inset: 0; z-index: 0; pointer-events: none;
+	background: linear-gradient(90deg, rgba(18,17,16,.6) 0%, rgba(18,17,16,.25) 65%, rgba(18,17,16,.1) 100%);
+}
+.e-con.va-photo-banner > .e-con-inner { position: relative; z-index: 1; justify-content: center; }
+@media (min-width: 1025px) { .e-con.va-photo-banner { background-attachment: fixed !important; } }
+.va-photo-banner__title .elementor-heading-title {
+	max-width: 16ch; margin: 0; color: #fff !important;
+	font-size: clamp(38px, 6vw, 96px) !important; line-height: 1 !important;
+	letter-spacing: -.02em !important; text-transform: uppercase;
+}
+
+/* ---------- Tables in project content ---------- */
+.va-entry .wp-block-table { margin: 30px 0 50px; overflow-x: auto; }
+.va-entry table { width: 100%; border-collapse: collapse; font-size: 15px; line-height: 1.5; color: var(--va-ink); }
+.va-entry table.has-fixed-layout { table-layout: auto; }
+.va-entry th { padding: 0 16px 14px 0; border-bottom: 1px solid var(--va-ink); font-size: 12px; font-weight: 500; letter-spacing: .1em; text-transform: uppercase; color: var(--va-grey-400); text-align: left; vertical-align: bottom; }
+.va-entry td { padding: 16px 16px 16px 0; border-bottom: 1px solid var(--va-grey-100); vertical-align: top; }
+.va-entry td:first-child { width: 50%; }
+.va-entry td:nth-child(2) { white-space: nowrap; }
+@media (max-width: 680px) { .va-entry table { font-size: 14px; } .va-entry td:first-child { width: auto; } }
 
 /* ---------- Reveal on scroll (class "va-reveal" on Elementor widgets) ---------- */
 .va-js .va-reveal { opacity: 0; transform: translateY(36px); transition: opacity 1s var(--va-ease), transform 1s var(--va-ease); }

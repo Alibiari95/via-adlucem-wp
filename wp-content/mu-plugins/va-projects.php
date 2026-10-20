@@ -126,14 +126,28 @@ add_filter(
 	2
 );
 
-// Readable addresses: WordPress transliterates most accented letters but not Azerbaijani ə or the Uzbek ʻ / ʼ.
+// Readable addresses: WordPress transliterates most accented letters but not Azerbaijani ə, the Uzbek ʻ / ʼ or Cyrillic.
 add_filter(
 	'sanitize_title',
 	function ( $title, $raw_title = '', $context = 'display' ) {
 		if ( 'save' !== $context ) {
 			return $title;
 		}
-		return strtr( $title, array( 'ə' => 'e', 'Ə' => 'e', 'ʻ' => '', 'ʼ' => '', '‘' => '', '’' => '' ) );
+		static $map = null;
+		if ( null === $map ) {
+			$map      = array( 'ə' => 'e', 'Ə' => 'e', 'ʻ' => '', 'ʼ' => '', '‘' => '', '’' => '' );
+			$cyrillic = array(
+				'а' => 'a', 'б' => 'b', 'в' => 'v', 'г' => 'g', 'д' => 'd', 'е' => 'e', 'ё' => 'yo', 'ж' => 'zh', 'з' => 'z', 'и' => 'i',
+				'й' => 'y', 'к' => 'k', 'л' => 'l', 'м' => 'm', 'н' => 'n', 'о' => 'o', 'п' => 'p', 'р' => 'r', 'с' => 's', 'т' => 't',
+				'у' => 'u', 'ф' => 'f', 'х' => 'kh', 'ц' => 'ts', 'ч' => 'ch', 'ш' => 'sh', 'щ' => 'shch', 'ъ' => '', 'ы' => 'y', 'ь' => '',
+				'э' => 'e', 'ю' => 'yu', 'я' => 'ya',
+			);
+			foreach ( $cyrillic as $from => $to ) {
+				$map[ $from ]                 = $to;
+				$map[ mb_strtoupper( $from ) ] = $to;
+			}
+		}
+		return strtr( $title, $map );
 	},
 	9,
 	3

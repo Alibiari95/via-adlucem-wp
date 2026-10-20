@@ -1,78 +1,82 @@
 <?php
 /**
- * Sample projects — English. Defines the layout (blocks, images, categories, tags) used by
- * tools/seed-projects.php; az.php / uz.php hold only the translated texts in the same order.
- *
- * Block layout keys: p (paragraph), h2 (heading), quote, img (one image), gallery (several images).
- * Images refer to placeholder files already in the Media Library (content/placeholders/).
+ * Projects — English (translated from az.php). Same structure and order as az.php.
  */
 
 return array(
-	'menu'       => 'Projects',
-	'categories' => array(
+	'menu'           => 'Projects',
+	'categories'     => array(
 		'residential'    => 'Residential',
 		'commercial'     => 'Commercial',
 		'infrastructure' => 'Public & Infrastructure',
 	),
-	'tags'       => array(
+	'tags'           => array(
 		'bim'          => 'BIM',
+		'master-plan'  => 'Master plan',
 		'architecture' => 'Architecture',
 		'structural'   => 'Structural engineering',
 		'mep'          => 'MEP',
 		'civil'        => 'Civil infrastructure',
+		'agdam'        => 'Aghdam',
 	),
-	'projects'   => array(
+	'labels'         => array(
+		'location'      => 'Location',
+		'period'        => 'Period',
+		'services'      => 'Services',
+		'overview'      => 'Project overview',
+		'features'      => 'Site features and engineering approach',
+		'objects'       => 'Project buildings and technical data',
+		'col_object'    => 'Building',
+		'col_area'      => 'Site area',
+		'col_elevation' => 'Absolute elevation (±0.00)',
+	),
+	'services_intro' => 'Core design services delivered by our in-house experts:',
+	'services_list'  => array( 'Master plan', 'Architecture', 'Structural design', 'Engineering systems (MEP)' ),
+	'overview'       => 'This comprehensive project was developed in close cooperation with our client, the “Service for Restoration, Construction and Management in the Karabakh Economic Region” public legal entity, under the relevant contract and design brief. The design is based on the boundary points set by the approved new master plan of Aghdam city and on a topographic survey of the site prepared by our team.',
+	'features'       => array(
+		array( 'Terrain and geology:', 'Although the site was partly damaged, it retains a fertile soil layer mixed with a small amount of household waste. The site has a calm relief and, according to engineering-geological surveys, lies in a seismic zone of intensity 8.' ),
+		array( 'Infrastructure and safety:', 'Every building is surrounded by dedicated roads that allow fire engines and ambulances to manoeuvre, as well as perimeter pavements for safe and comfortable pedestrian movement.' ),
+		array( 'Landscaping:', 'In line with the new master plan, the designed areas are fully landscaped with green strips, event squares and modern road and pavement infrastructure.' ),
+	),
+	'projects'       => array(
 		array(
-			'date'     => '2026-09-08 10:00:00',
-			'cover'    => 'hero-1',
-			'category' => 'residential',
-			'tags'     => array( 'bim', 'architecture', 'mep' ),
-			'layout'   => array( 'p', array( 'img', 'project-1' ), 'h2', 'p', 'quote', array( 'gallery', array( 'project-2', 'project-3' ) ), 'p' ),
-			'slug'     => 'caspian-residence',
-			'title'    => 'Caspian Residence',
-			'excerpt'  => 'A seven-storey residential building on the Caspian waterfront, delivered with a fully coordinated BIM model.',
-			'texts'    => array(
-				'Caspian Residence is a seven-storey residential building with 42 apartments, underground parking and a landscaped courtyard. Via Ad Lucem delivered the architectural design, structural engineering and MEP systems from concept to construction documentation.',
-				'A coordinated model from day one',
-				'Every discipline worked in a single BIM model, so architectural layouts, structural grids and building services were checked against each other continuously. More than 300 clashes were resolved before the drawings reached the site.',
-				'The model let us make decisions early — while they were still easy to change.',
-				'The result is a calm, light-filled building whose technical systems stay out of sight and out of the way.',
+			'title'         => 'Göytəpə: Comprehensive Working Design',
+			'slug'          => 'goytepe-comprehensive-working-design',
+			'excerpt'       => 'Master plan, architecture, structural and engineering systems design for a kindergarten, medical centre, administrative building and school in Göytəpə village, Aghdam.',
+			'location'      => 'Göytəpə village, Aghdam district',
+			'objects_intro' => 'In the project, the floor level of each building’s ground floor is taken as the conventional zero (0.000). The master plan data of the main buildings in the complex are listed below:',
+			'objects'       => array(
+				array( 'Two-storey kindergarten for 80 children (phase 1)', '1.28 ha', '+287.90' ),
+				array( 'Single-storey medical centre', '3.94 ha', '+286.65' ),
+				array( 'Two-storey administrative building', '1.15 ha', '+286.40' ),
+				array( 'Two-storey school for 432 pupils', '2.59 ha', '+287.20' ),
 			),
 		),
 		array(
-			'date'     => '2026-09-22 10:00:00',
-			'cover'    => 'hero-2',
-			'category' => 'commercial',
-			'tags'     => array( 'bim', 'structural', 'mep' ),
-			'layout'   => array( 'p', array( 'img', 'project-4' ), 'h2', 'p', 'quote', array( 'gallery', array( 'project-5', 'about' ) ), 'p' ),
-			'slug'     => 'atrium-office',
-			'title'    => 'Atrium Office',
-			'excerpt'  => 'A twelve-storey office building organised around a daylit atrium, with integrated structural and MEP design.',
-			'texts'    => array(
-				'Atrium Office is a twelve-storey commercial building organised around a central atrium that brings daylight deep into the floor plates. Our team provided structural engineering, MEP design and technical documentation for the whole project.',
-				'Engineering for flexible workspace',
-				'Long-span floors give tenants open, column-free space, while a raised-floor system and a coordinated ceiling void keep power, data and air distribution easy to adapt.',
-				'Flexible floors and coordinated services let the building change with its tenants.',
-				'Energy modelling guided the façade and HVAC design, reducing the building’s expected cooling load and operating costs.',
+			'title'         => 'Güllücə: Comprehensive Working Design',
+			'slug'          => 'gulluce-comprehensive-working-design',
+			'excerpt'       => 'Master plan, architecture, structural and engineering systems design for schools, kindergartens, an administrative building, a medical centre and a cemetery complex in Güllücə village, Aghdam.',
+			'location'      => 'Güllücə village, Aghdam district',
+			'objects_intro' => 'In the project, the floor level of each building’s ground floor is taken as the conventional zero (0.000). The master plan data of the buildings and zones of various purposes in the complex are listed below:',
+			'objects'       => array(
+				array( 'Two-storey kindergarten for 80 children (phase 2)', '2.23 ha', '+248.35' ),
+				array( 'Two-storey administrative building and single-storey medical centre', '5.63 ha', 'Administrative building: +229.55 · Medical centre: +228.05' ),
+				array( 'Two-storey school for 480 pupils and two-storey kindergarten for 120 children (phase 1)', '5.36 ha', 'School: +235.60 · Kindergarten: +234.55' ),
+				array( 'Two-storey school for 480 pupils and two-storey kindergarten for 80 children (phase 2)', '3.75 ha', 'School: +218.83 · Kindergarten: +219.52' ),
+				array( 'Cemetery complex (conserved)', '2.86 ha', 'Ablution house: +242.58 · Guard booth: +241.44' ),
 			),
 		),
 		array(
-			'date'     => '2026-10-06 10:00:00',
-			'cover'    => 'hero-3',
-			'category' => 'infrastructure',
-			'tags'     => array( 'bim', 'civil' ),
-			'layout'   => array( 'p', array( 'img', 'project-6' ), 'h2', 'p', 'quote', array( 'gallery', array( 'project-1', 'project-4' ) ), 'p' ),
-			'slug'     => 'harbour-pavilion',
-			'title'    => 'Harbour Pavilion',
-			'excerpt'  => 'A public pavilion and promenade with new external utilities, stormwater management and access roads.',
-			'texts'    => array(
-				'Harbour Pavilion is a public pavilion on a new waterfront promenade. Alongside the building itself, Via Ad Lucem designed the site infrastructure: external water, gas and power connections, access roads and stormwater drainage.',
-				'Infrastructure that stays out of sight',
-				'All utility routes were modelled in 3D together with the landscape, so trenches, manholes and drainage lines fit around trees, paving and seating without conflicts.',
-				'Good infrastructure is the part of a project nobody notices — because it simply works.',
-				'Sustainable drainage swales collect surface water from the promenade and release it slowly, protecting the harbour from peak flows.',
+			'title'         => 'Salahlı: Comprehensive Working Design',
+			'slug'          => 'salahli-comprehensive-working-design',
+			'excerpt'       => 'Master plan, architecture, structural and engineering systems design for an administrative building, medical centre, school and kindergarten in Salahlı village, Aghdam.',
+			'location'      => 'Salahlı village, Aghdam district',
+			'objects_intro' => 'In the project, the floor level of each building’s ground floor is taken as the conventional zero (0.000). The master plan data of the buildings of various purposes in the complex are listed below:',
+			'objects'       => array(
+				array( 'Two-storey administrative building and single-storey medical centre', '4.26 ha', 'Administrative building: +344.70 · Medical centre: +343.65' ),
+				array( 'Two-storey school for 480 pupils and two-storey kindergarten for 80 children (phase 2)', '3.75 ha', 'School: +218.83 · Kindergarten: +219.52' ),
 			),
 		),
 	),
-	'strings'    => array(),
+	'strings'        => array(),
 );

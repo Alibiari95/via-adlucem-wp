@@ -257,6 +257,7 @@ function va_at_language_name( $slug ) {
 		'en' => 'English',
 		'az' => 'Azerbaijani (Latin script)',
 		'uz' => 'Uzbek (Latin script; write oʻ and gʻ with the modifier letter ʻ U+02BB)',
+		'ru' => 'Russian',
 	);
 	return $names[ $slug ] ?? $slug;
 }
