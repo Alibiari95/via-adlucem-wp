@@ -730,6 +730,8 @@ body.admin-bar .va-header { top: 32px; }
 .va-entry a { color: var(--va-primary); text-decoration: underline; text-underline-offset: 3px; }
 .va-entry ul, .va-entry ol { padding-left: 1.3em; }
 .va-entry li + li { margin-top: 6px; }
+.va-entry li > ul, .va-entry li > ol { margin: 8px 0 4px; padding-left: 1.2em; list-style: circle; font-size: 16px; }
+.va-entry li strong { color: var(--va-ink); font-weight: 500; }
 .va-entry figure { margin: 50px 0; }
 .va-entry img { display: block; width: 100%; height: auto; }
 .va-entry figcaption { margin-top: 12px; font-size: 13px; color: var(--va-grey-400); text-align: left; }

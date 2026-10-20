@@ -60,10 +60,10 @@ return array(
 			'objects_intro' => 'In the project, the floor level of each building’s ground floor is taken as the conventional zero (0.000). The master plan data of the buildings and zones of various purposes in the complex are listed below:',
 			'objects'       => array(
 				array( 'Two-storey kindergarten for 80 children (phase 2)', '2.23 ha', '+248.35' ),
-				array( 'Two-storey administrative building and single-storey medical centre', '5.63 ha', 'Administrative building: +229.55 · Medical centre: +228.05' ),
-				array( 'Two-storey school for 480 pupils and two-storey kindergarten for 120 children (phase 1)', '5.36 ha', 'School: +235.60 · Kindergarten: +234.55' ),
-				array( 'Two-storey school for 480 pupils and two-storey kindergarten for 80 children (phase 2)', '3.75 ha', 'School: +218.83 · Kindergarten: +219.52' ),
-				array( 'Cemetery complex (conserved)', '2.86 ha', 'Ablution house: +242.58 · Guard booth: +241.44' ),
+				array( 'Two-storey administrative building and single-storey medical centre', '5.63 ha', 'Administrative building: +229.55 | Medical centre: +228.05' ),
+				array( 'Two-storey school for 480 pupils and two-storey kindergarten for 120 children (phase 1)', '5.36 ha', 'School: +235.60 | Kindergarten: +234.55' ),
+				array( 'Two-storey school for 480 pupils and two-storey kindergarten for 80 children (phase 2)', '3.75 ha', 'School: +218.83 | Kindergarten: +219.52' ),
+				array( 'Cemetery complex (conserved)', '2.86 ha', 'Ablution house: +242.58 | Guard booth: +241.44' ),
 			),
 		),
 		array(
@@ -73,8 +73,8 @@ return array(
 			'location'      => 'Salahlı village, Aghdam district',
 			'objects_intro' => 'In the project, the floor level of each building’s ground floor is taken as the conventional zero (0.000). The master plan data of the buildings of various purposes in the complex are listed below:',
 			'objects'       => array(
-				array( 'Two-storey administrative building and single-storey medical centre', '4.26 ha', 'Administrative building: +344.70 · Medical centre: +343.65' ),
-				array( 'Two-storey school for 480 pupils and two-storey kindergarten for 80 children (phase 2)', '3.75 ha', 'School: +218.83 · Kindergarten: +219.52' ),
+				array( 'Two-storey administrative building and single-storey medical centre', '4.26 ha', 'Administrative building: +344.70 | Medical centre: +343.65' ),
+				array( 'Two-storey school for 480 pupils and two-storey kindergarten for 80 children (phase 2)', '3.75 ha', 'School: +218.83 | Kindergarten: +219.52' ),
 			),
 		),
 	),

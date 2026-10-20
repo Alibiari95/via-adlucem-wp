@@ -48,10 +48,10 @@ return array(
 			'location'      => 'Ağdam rayonu, Göytəpə kəndi',
 			'objects_intro' => 'Layihə çərçivəsində hər bir binanın 1-ci mərtəbəsinin döşəmə səviyəsi şərti olaraq 0.000 qəbul edilmişdir. Aşağıda kompleksə daxil olan əsas binaların baş plan göstəriciləri təqdim olunur:',
 			'objects'       => array(
-				array( '2 mərtəbəli, 80 yerlik Uşaq bağçası (1-ci mərhələ)', '1.28 ha', '+287.90' ),
-				array( '1 mərtəbəli Tibb məntəqəsi', '3.94 ha', '+286.65' ),
-				array( '2 mərtəbəli İnzibati bina', '1.15 ha', '+286.40' ),
-				array( '2 mərtəbəli, 432 yerlik Məktəb binası', '2.59 ha', '+287.20' ),
+				array( '2 mərtəbəli, 80 yerlik Uşaq bağçası (1-ci mərhələ)', '1.28 Ha', '+ 287.90' ),
+				array( '1 mərtəbəli Tibb məntəqəsi', '3.94 Ha', '+ 286.65' ),
+				array( '2 mərtəbəli İnzibati bina', '1.15 Ha', '+ 286.40' ),
+				array( '2 mərtəbəli, 432 yerlik Məktəb binası', '2.59 Ha', '+ 287.20' ),
 			),
 		),
 		array(
@@ -61,11 +61,11 @@ return array(
 			'location'      => 'Ağdam rayonu, Güllücə kəndi',
 			'objects_intro' => 'Layihə çərçivəsində hər bir binanın 1-ci mərtəbəsinin döşəmə səviyəsi şərti olaraq 0.000 qəbul edilmişdir. Aşağıda kompleksə daxil olan müxtəlif təyinatlı binaların və zonaların baş plan göstəriciləri təqdim olunur:',
 			'objects'       => array(
-				array( '2 mərtəbəli, 80 yerlik Uşaq bağçası (2-ci mərhələ)', '2.23 ha', '+248.35' ),
-				array( '2 mərtəbəli İnzibati bina və 1 mərtəbəli Tibb məntəqəsi', '5.63 ha', 'İnzibati bina: +229.55 · Tibb məntəqəsi: +228.05' ),
-				array( '2 mərtəbəli, 480 yerlik Məktəb binası və 2 mərtəbəli, 120 yerlik Uşaq bağçası (1-ci mərhələ)', '5.36 ha', 'Məktəb binası: +235.60 · Bağça binası: +234.55' ),
-				array( '2 mərtəbəli, 480 yerlik Məktəb binası və 2 mərtəbəli, 80 yerlik Uşaq bağçası (2-ci mərhələ)', '3.75 ha', 'Məktəb binası: +218.83 · Uşaq bağçası: +219.52' ),
-				array( 'Qəbiristanlıq kompleksi (konservasiya olunmuş)', '2.86 ha', 'Yuyatxana: +242.58 · Mühafizə köşkü: +241.44' ),
+				array( '2 mərtəbəli, 80 yerlik Uşaq bağçası (2-ci mərhələ)', '2.23 Ha', '+ 248.35' ),
+				array( '2 mərtəbəli İnzibati bina və 1 mərtəbəli Tibb məntəqəsi', '5.63 Ha', 'İnzibati bina üçün + 229.55 | Tibb məntəqəsi üçün + 228.05' ),
+				array( '2 mərtəbəli, 480 yerlik Məktəb binası və 2 mərtəbəli, 120 yerlik Uşaq bağçası (1-ci mərhələ)', '5.36 Ha', 'Məktəb binası üçün + 235.60 | Bağça binası üçün + 234.55' ),
+				array( '2 mərtəbəli, 480 yerlik Məktəb binası və 2 mərtəbəli, 80 yerlik Uşaq bağçası (2-ci mərhələ)', '3.75 Ha', 'Məktəb binası üçün + 218.83 | Uşaq bağçası üçün + 219.52' ),
+				array( 'Qəbiristanlıq kompleksi (konservasiya olunmuş)', '2.86 Ha', 'Yuyatxana üçün + 242.58 | Mühafizə köşkü üçün + 241.44' ),
 			),
 		),
 		array(
@@ -75,8 +75,8 @@ return array(
 			'location'      => 'Ağdam rayonu, Salahlı kəndi',
 			'objects_intro' => 'Layihə çərçivəsində hər bir binanın 1-ci mərtəbəsinin döşəmə səviyəsi şərti olaraq 0.000 qəbul edilmişdir. Aşağıda kompleksə daxil olan müxtəlif təyinatlı binaların baş plan göstəriciləri təqdim olunur:',
 			'objects'       => array(
-				array( '2 mərtəbəli İnzibati bina və 1 mərtəbəli Tibb məntəqəsi', '4.26 ha', 'İnzibati bina: +344.70 · Tibb məntəqəsi: +343.65' ),
-				array( '2 mərtəbəli, 480 yerlik Məktəb binası və 2 mərtəbəli, 80 yerlik Uşaq bağçası (2-ci mərhələ)', '3.75 ha', 'Məktəb binası: +218.83 · Uşaq bağçası: +219.52' ),
+				array( '2 mərtəbəli İnzibati bina və 1 mərtəbəli Tibb məntəqəsi', '4.26 Ha', 'İnzibati bina üçün + 344.70 | Tibb məntəqəsi üçün + 343.65' ),
+				array( '2 mərtəbəli, 480 yerlik Məktəb binası və 2 mərtəbəli, 80 yerlik Uşaq bağçası (2-ci mərhələ)', '3.75 Ha', 'Məktəb binası üçün + 218.83 | Uşaq bağçası üçün + 219.52' ),
 			),
 		),
 	),

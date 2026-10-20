@@ -60,10 +60,10 @@ return array(
 			'objects_intro' => 'Loyiha doirasida har bir binaning 1-qavati pol sathi shartli ravishda 0.000 deb qabul qilingan. Quyida majmuaga kiruvchi turli maqsadli binolar va zonalarning bosh reja koʻrsatkichlari keltirilgan:',
 			'objects'       => array(
 				array( '2 qavatli, 80 oʻrinli bolalar bogʻchasi (2-bosqich)', '2.23 ga', '+248.35' ),
-				array( '2 qavatli maʼmuriy bino va 1 qavatli tibbiyot punkti', '5.63 ga', 'Maʼmuriy bino: +229.55 · Tibbiyot punkti: +228.05' ),
-				array( '2 qavatli, 480 oʻrinli maktab binosi va 2 qavatli, 120 oʻrinli bolalar bogʻchasi (1-bosqich)', '5.36 ga', 'Maktab binosi: +235.60 · Bogʻcha binosi: +234.55' ),
-				array( '2 qavatli, 480 oʻrinli maktab binosi va 2 qavatli, 80 oʻrinli bolalar bogʻchasi (2-bosqich)', '3.75 ga', 'Maktab binosi: +218.83 · Bolalar bogʻchasi: +219.52' ),
-				array( 'Qabriston majmuasi (konservatsiya qilingan)', '2.86 ga', 'Gʻassolxona: +242.58 · Qoʻriqlash budkasi: +241.44' ),
+				array( '2 qavatli maʼmuriy bino va 1 qavatli tibbiyot punkti', '5.63 ga', 'Maʼmuriy bino: +229.55 | Tibbiyot punkti: +228.05' ),
+				array( '2 qavatli, 480 oʻrinli maktab binosi va 2 qavatli, 120 oʻrinli bolalar bogʻchasi (1-bosqich)', '5.36 ga', 'Maktab binosi: +235.60 | Bogʻcha binosi: +234.55' ),
+				array( '2 qavatli, 480 oʻrinli maktab binosi va 2 qavatli, 80 oʻrinli bolalar bogʻchasi (2-bosqich)', '3.75 ga', 'Maktab binosi: +218.83 | Bolalar bogʻchasi: +219.52' ),
+				array( 'Qabriston majmuasi (konservatsiya qilingan)', '2.86 ga', 'Gʻassolxona: +242.58 | Qoʻriqlash budkasi: +241.44' ),
 			),
 		),
 		array(
@@ -73,8 +73,8 @@ return array(
 			'location'      => 'Agʻdam tumani, Salahlı qishlogʻi',
 			'objects_intro' => 'Loyiha doirasida har bir binaning 1-qavati pol sathi shartli ravishda 0.000 deb qabul qilingan. Quyida majmuaga kiruvchi turli maqsadli binolarning bosh reja koʻrsatkichlari keltirilgan:',
 			'objects'       => array(
-				array( '2 qavatli maʼmuriy bino va 1 qavatli tibbiyot punkti', '4.26 ga', 'Maʼmuriy bino: +344.70 · Tibbiyot punkti: +343.65' ),
-				array( '2 qavatli, 480 oʻrinli maktab binosi va 2 qavatli, 80 oʻrinli bolalar bogʻchasi (2-bosqich)', '3.75 ga', 'Maktab binosi: +218.83 · Bolalar bogʻchasi: +219.52' ),
+				array( '2 qavatli maʼmuriy bino va 1 qavatli tibbiyot punkti', '4.26 ga', 'Maʼmuriy bino: +344.70 | Tibbiyot punkti: +343.65' ),
+				array( '2 qavatli, 480 oʻrinli maktab binosi va 2 qavatli, 80 oʻrinli bolalar bogʻchasi (2-bosqich)', '3.75 ga', 'Maktab binosi: +218.83 | Bolalar bogʻchasi: +219.52' ),
 			),
 		),
 	),

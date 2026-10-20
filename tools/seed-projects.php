@@ -151,7 +151,7 @@ function va_seed_project( $layout, $lang_content, $text, $lang, $photos, $terms 
 	return (int) $id;
 }
 
-/** Block-editor markup: key facts, services, overview, site features, buildings table. */
+/** Block-editor markup: key facts, services, overview, site features, buildings (nested bullet list). */
 function va_seed_project_blocks( $layout, $c, $text ) {
 	$l      = $c['labels'];
 	$p      = fn( $html ) => "<!-- wp:paragraph -->\n<p>" . $html . "</p>\n<!-- /wp:paragraph -->";
@@ -176,11 +176,17 @@ function va_seed_project_blocks( $layout, $c, $text ) {
 
 	$blocks[] = $h2( $l['objects'] );
 	$blocks[] = $p( esc_html( $text['objects_intro'] ) );
-	$rows     = '';
+	// Each building as a bullet with its site area and elevation as sub-bullets (as in the source document).
+	$items = array();
 	foreach ( $text['objects'] as $o ) {
-		$rows .= '<tr><td>' . esc_html( $o[0] ) . '</td><td>' . esc_html( $o[1] ) . '</td><td>' . esc_html( $o[2] ) . '</td></tr>';
+		$items[] = '<strong>' . esc_html( $o[0] ) . '</strong>' . "\n" . $list(
+			array(
+				'<strong>' . esc_html( $l['col_area'] ) . ':</strong> ' . esc_html( $o[1] ),
+				'<strong>' . esc_html( $l['col_elevation'] ) . ':</strong> ' . esc_html( $o[2] ),
+			)
+		);
 	}
-	$blocks[] = "<!-- wp:table -->\n<figure class=\"wp-block-table\"><table class=\"has-fixed-layout\"><thead><tr><th>" . esc_html( $l['col_object'] ) . '</th><th>' . esc_html( $l['col_area'] ) . '</th><th>' . esc_html( $l['col_elevation'] ) . '</th></tr></thead><tbody>' . $rows . "</tbody></table></figure>\n<!-- /wp:table -->";
+	$blocks[] = $list( $items );
 
 	return implode( "\n\n", $blocks );
 }
