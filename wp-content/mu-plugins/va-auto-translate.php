@@ -146,12 +146,14 @@ function va_at_translate_post( $source_id, $lang, $target_id = 0 ) {
 	}
 
 	$settings = va_at_settings();
+	// Hidden languages (mu-plugins/va-languages.php) only ever get drafts.
+	$publish  = ! $failed && ! empty( $settings['publish'] ) && ! ( function_exists( 'va_is_hidden_language' ) && va_is_hidden_language( $lang ) );
 	$postarr  = array(
 		'post_type'      => $source->post_type,
 		'post_title'     => $result['title'],
 		'post_excerpt'   => $result['excerpt'],
 		'post_content'   => $result['content'],
-		'post_status'    => ( ! $failed && ! empty( $settings['publish'] ) ) ? 'publish' : 'draft',
+		'post_status'    => $publish ? 'publish' : 'draft',
 		'post_author'    => $source->post_author,
 		'post_date'      => $source->post_date,
 		'post_date_gmt'  => $source->post_date_gmt,
@@ -163,7 +165,7 @@ function va_at_translate_post( $source_id, $lang, $target_id = 0 ) {
 	} else {
 		$postarr['ID'] = $target_id;
 		unset( $postarr['post_status'], $postarr['post_date'], $postarr['post_date_gmt'] );
-		if ( ! $failed && ! empty( $settings['publish'] ) ) {
+		if ( $publish ) {
 			$postarr['post_status'] = 'publish';
 		}
 	}
