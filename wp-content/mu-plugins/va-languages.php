@@ -98,6 +98,14 @@ add_action(
 			if ( $translation ) {
 				$target = get_term_link( (int) $translation );
 			}
+		} elseif ( is_404() ) {
+			// Hidden-language pages are drafts, so WordPress can't resolve them: look the slug up directly.
+			$slug  = basename( untrailingslashit( (string) wp_parse_url( $_SERVER['REQUEST_URI'] ?? '', PHP_URL_PATH ) ) );
+			$draft = $slug ? get_posts( array( 'name' => sanitize_title( $slug ), 'post_type' => array( 'page', 'post', 'va_service', 'va_project' ), 'post_status' => 'draft', 'numberposts' => 1, 'fields' => 'ids', 'lang' => $lang ) ) : array();
+			$translation = $draft ? pll_get_post( $draft[0], $default ) : 0;
+			if ( $translation && 'publish' === get_post_status( $translation ) ) {
+				$target = get_permalink( $translation );
+			}
 		} elseif ( is_post_type_archive() ) {
 			$target = PLL()->links_model->switch_language_in_link( get_post_type_archive_link( get_query_var( 'post_type' ) ), PLL()->model->get_language( $default ) );
 		}
