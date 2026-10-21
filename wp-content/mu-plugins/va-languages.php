@@ -72,3 +72,36 @@ add_filter(
 		return array_values( array_diff( (array) $keys, array( '_va_status_before_hide' ) ) );
 	}
 );
+
+// Visitors on an address in a hidden language go to the same page in the default language
+// (or its home page). Logged-in editors still see the hidden pages to work on them.
+add_action(
+	'template_redirect',
+	function () {
+		if ( current_user_can( 'edit_posts' ) || ! function_exists( 'pll_current_language' ) ) {
+			return;
+		}
+		$lang = pll_current_language();
+		if ( ! $lang || ! va_is_hidden_language( $lang ) ) {
+			return;
+		}
+		$default = pll_default_language();
+		$target  = pll_home_url( $default );
+		$object  = get_queried_object();
+		if ( is_singular() && $object instanceof WP_Post ) {
+			$translation = pll_get_post( $object->ID, $default );
+			if ( $translation && 'publish' === get_post_status( $translation ) ) {
+				$target = get_permalink( $translation );
+			}
+		} elseif ( is_tax() && $object instanceof WP_Term ) {
+			$translation = pll_get_term( $object->term_id, $default );
+			if ( $translation ) {
+				$target = get_term_link( (int) $translation );
+			}
+		} elseif ( is_post_type_archive() ) {
+			$target = PLL()->links_model->switch_language_in_link( get_post_type_archive_link( get_query_var( 'post_type' ) ), PLL()->model->get_language( $default ) );
+		}
+		wp_safe_redirect( is_wp_error( $target ) ? pll_home_url( $default ) : $target, 302 );
+		exit;
+	}
+);
